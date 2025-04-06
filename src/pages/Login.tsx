@@ -6,10 +6,11 @@ const LoginPage = () => {
     return (
         <AuthLayout>
             <h1 className="font-bold text-[40px]">Login</h1>
-            <Input label="Email"></Input>
+            <Input label="Username" autoFocus={true}></Input>
+            <Input label="Password" type="password"></Input>
             <p>
                 Belum punya akun?{" "}
-                <NavLink className="underline" to={"/register"}>
+                <NavLink className="underline font-bold" to={"/register"}>
                     Register
                 </NavLink>
             </p>
