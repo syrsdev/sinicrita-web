@@ -5,7 +5,7 @@ const Field = ({ type, id, autoFocus, placeholder }: any) => {
             id={id}
             autoFocus={autoFocus}
             placeholder={placeholder}
-            className="bg-white rounded-lg text-[#282828] py-2 px-3 focus:outline-none focus:shadow-outline"
+            className="bg-white rounded-lg text-slate-500 py-2 px-3 focus:outline-none focus:shadow-outline"
         />
     );
 };
