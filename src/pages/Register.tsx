@@ -17,7 +17,7 @@ const RegisterPage = () => {
             <Input
                 label="Password"
                 type="password"
-                placeholder="Masukan password   "
+                placeholder="Masukan password"
             ></Input>
 
             <Button type="submit" classname="mt-4">
