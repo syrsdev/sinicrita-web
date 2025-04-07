@@ -6,7 +6,7 @@ import Button from "../components/Button";
 const LoginPage = () => {
     return (
         <AuthLayout>
-            <h1 className="font-bold text-[23px] md:text-[28px] xl:text-[40px]">
+            <h1 className="font-bold text-[23px] md:text-[28px] xl:text-[40px] text-center">
                 Login
             </h1>
             <Input
@@ -23,7 +23,7 @@ const LoginPage = () => {
             <Button type="submit" classname="mt-4">
                 Masuk
             </Button>
-            <p>
+            <p className="text-center">
                 Belum punya akun?{" "}
                 <NavLink className="underline font-bold" to={"/register"}>
                     Register
