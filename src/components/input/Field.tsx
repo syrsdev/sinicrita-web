@@ -1,10 +1,12 @@
-const Field = ({ type, id, autoFocus, placeholder }: any) => {
+const Field = ({ type, id, autoFocus, placeholder, name, checked }: any) => {
     return (
         <input
             type={type}
             id={id}
             autoFocus={autoFocus}
             placeholder={placeholder}
+            name={name}
+            defaultChecked={checked}
             className="bg-white rounded-lg text-slate-500 py-2 px-3 focus:outline-none focus:shadow-outline"
         />
     );
