@@ -4,17 +4,24 @@ import Input from "../components/input/Index";
 import Button from "../components/Button";
 import { useState } from "react";
 import { Login } from "../services/auth.service";
-import { Alert } from "../hooks/useAlert";
+import { useAlert } from "../hooks/useAlert";
 
 const LoginPage = () => {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
+    const [buttonDisable, setbuttonDisable] = useState(false);
 
+    useAlert();
     const data = { username: Username, password: Password };
 
     const handleLogin = (e: any) => {
         e.preventDefault();
         Login(data);
+        setbuttonDisable(true);
+
+        setTimeout(() => {
+            setbuttonDisable(false);
+        }, 1000);
     };
     return (
         <AuthLayout onsubmit={handleLogin}>
@@ -34,7 +41,7 @@ const LoginPage = () => {
                 onchange={(e: any) => setPassword(e.target.value)}
             ></Input>
 
-            <Button type="submit" classname="mt-4">
+            <Button type="submit" classname="mt-4" disable={buttonDisable}>
                 Masuk
             </Button>
             <p className="text-center">

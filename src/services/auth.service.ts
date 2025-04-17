@@ -1,5 +1,6 @@
 import axios from "axios";
 import api from "./axios.service.ts";
+import { alert } from "../hooks/useAlert.ts";
 
 export const getCsrfToken = async (): Promise<void> => {
     try {
@@ -31,11 +32,26 @@ export const Login = (data: { username: string; password: string }) => {
         withCredentials: true,
     })
         .then((res) => {
-            localStorage.setItem("success", res.data.message);
-            // window.location.href = "/";
-            getUser();
+            const message: {
+                title: string;
+                text: string;
+                icon: string;
+            } = {
+                title: "success",
+                text: res.data.message,
+                icon: "success",
+            };
+            sessionStorage.setItem("alert", JSON.stringify(message));
+            window.location.href = "/";
+            // getUser();
         })
-        .catch((err) => console.log(err.response.data));
+        .catch((err) => {
+            alert.fire({
+                title: "Oops...",
+                text: err.response.data.message,
+                icon: "error",
+            });
+        });
 };
 export const Register = (data: {
     username: string;
@@ -47,7 +63,23 @@ export const Register = (data: {
         withCredentials: true,
     })
         .then((res) => {
-            console.log(res.data);
+            const message: {
+                title: string;
+                text: string;
+                icon: string;
+            } = {
+                title: "success",
+                text: res.data.message,
+                icon: "success",
+            };
+            sessionStorage.setItem("alert", JSON.stringify(message));
+            window.location.href = "/login";
         })
-        .catch((err) => console.log(err.response.data));
+        .catch((err) => {
+            alert.fire({
+                title: "Oops...",
+                text: err.response.data.message,
+                icon: "error",
+            });
+        });
 };

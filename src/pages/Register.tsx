@@ -11,13 +11,18 @@ const RegisterPage = () => {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const [Role, setRole] = useState("pendengar");
+    const [buttonDisable, setbuttonDisable] = useState(false);
 
     const data = { username: Username, password: Password, role: Role };
-    console.log(data);
 
     const handleRegister = (e: any) => {
         e.preventDefault();
         Register(data);
+        setbuttonDisable(true);
+
+        setTimeout(() => {
+            setbuttonDisable(false);
+        }, 1000);
     };
     return (
         <AuthLayout onsubmit={handleRegister}>
@@ -54,7 +59,7 @@ const RegisterPage = () => {
                 </div>
             </div>
 
-            <Button type="submit" classname="mt-4">
+            <Button type="submit" disable={buttonDisable} classname="mt-4">
                 Daftar
             </Button>
 
