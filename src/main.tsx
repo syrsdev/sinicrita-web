@@ -5,6 +5,10 @@ import App from "./pages/Home.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/Login.tsx";
 import RegisterPage from "./pages/Register.tsx";
+import Post from "./pages/Post.tsx";
+import { AuthProvider } from "./context/AuthContext.tsx";
+import ProtectedRoute from "./route/ProtectedRoute.tsx";
+import GuestRoute from "./route/GuestRoute.tsx";
 
 const router = createBrowserRouter([
     {
@@ -13,16 +17,34 @@ const router = createBrowserRouter([
     },
     {
         path: "/login",
-        element: <LoginPage />,
+        element: (
+            <GuestRoute>
+                <LoginPage />
+            </GuestRoute>
+        ),
     },
     {
         path: "/register",
-        element: <RegisterPage />,
+        element: (
+            <GuestRoute>
+                <RegisterPage />
+            </GuestRoute>
+        ),
+    },
+    {
+        path: "/post",
+        element: (
+            <ProtectedRoute>
+                <Post />
+            </ProtectedRoute>
+        ),
     },
 ]);
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <RouterProvider router={router} />
+        <AuthProvider>
+            <RouterProvider router={router} />
+        </AuthProvider>
     </StrictMode>
 );
