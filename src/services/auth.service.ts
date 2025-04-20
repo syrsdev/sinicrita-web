@@ -12,15 +12,15 @@ export const getCsrfToken = async (): Promise<void> => {
         console.error("Failed to fetch CSRF token:", error);
     }
 };
-export const getUser = async (): Promise<void> => {
+export const getUser = async () => {
     try {
         const data = await axios.get(
-            `${import.meta.env.VITE_API_URL}/api/user`,
+            `${import.meta.env.VITE_API_URL}/api/v1/user`,
             {
                 withCredentials: true,
             }
         );
-        console.log(data);
+        return data.data;
     } catch (error) {
         console.error("kiw", error);
     }
@@ -42,8 +42,7 @@ export const Login = (data: { username: string; password: string }) => {
                 icon: "success",
             };
             sessionStorage.setItem("alert", JSON.stringify(message));
-            window.location.href = "/";
-            // getUser();
+            window.location.href = "/post";
         })
         .catch((err) => {
             alert.fire({
@@ -57,6 +56,7 @@ export const Register = (data: {
     username: string;
     password: string;
     role: string;
+    password_confirmation: string;
 }) => {
     getCsrfToken();
     api.post("/register", data, {
