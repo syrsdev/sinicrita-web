@@ -10,10 +10,16 @@ import { Register } from "../services/auth.service";
 const RegisterPage = () => {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
+    const [PasswordConfirmation, setPasswordConfirmation] = useState("");
     const [Role, setRole] = useState("pendengar");
     const [buttonDisable, setbuttonDisable] = useState(false);
 
-    const data = { username: Username, password: Password, role: Role };
+    const data = {
+        username: Username,
+        password: Password,
+        role: Role,
+        password_confirmation: PasswordConfirmation,
+    };
 
     const handleRegister = (e: any) => {
         e.preventDefault();
@@ -32,14 +38,20 @@ const RegisterPage = () => {
             <Input
                 label="Username"
                 autoFocus={true}
-                placeholder="Masukan username"
+                placeholder="Masukan username anda"
                 onchange={(e: any) => setUsername(e.target.value)}
             ></Input>
             <Input
                 label="Password"
                 type="password"
-                placeholder="Masukan password"
+                placeholder="Password min 8 karakter"
                 onchange={(e: any) => setPassword(e.target.value)}
+            ></Input>
+            <Input
+                label="Konfirmasi Password"
+                type="password"
+                placeholder="Konfirmasi password"
+                onchange={(e: any) => setPasswordConfirmation(e.target.value)}
             ></Input>
 
             <div className="flex-col">

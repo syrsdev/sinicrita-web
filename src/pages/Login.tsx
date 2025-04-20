@@ -31,13 +31,13 @@ const LoginPage = () => {
             <Input
                 label="Username"
                 autoFocus={true}
-                placeholder="Masukan username"
+                placeholder="Masukan username anda"
                 onchange={(e: any) => setUsername(e.target.value)}
             ></Input>
             <Input
                 label="Password"
                 type="password"
-                placeholder="Masukan password"
+                placeholder="Password min 8 karakter"
                 onchange={(e: any) => setPassword(e.target.value)}
             ></Input>
 
