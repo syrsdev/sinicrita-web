@@ -12,7 +12,9 @@ const Button = ({
             type={type}
             disabled={disable}
             onClick={onclick}
-            className={`w-full gap-2 flex justify-center items-center bg-secondary py-2 px-3 rounded-lg cursor-pointer ${classname}`}
+            className={`w-full gap-2 flex justify-center items-center bg-secondary py-2 px-3 rounded-lg ${
+                disable ? "cursor-not-allowed" : "cursor-pointer"
+            } ${classname}`}
         >
             {disable ? <Loading /> : children}
         </button>
