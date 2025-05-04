@@ -3,8 +3,9 @@ import useAuth from "../hooks/useAuth";
 import { JSX } from "react";
 
 const GuestRoute = ({ children }: { children: JSX.Element }) => {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
 
+    if (loading) return <p>Loading...</p>
     if (user) return <Navigate to="/post" replace />;
 
     return children;
