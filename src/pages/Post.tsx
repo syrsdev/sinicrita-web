@@ -1,6 +1,7 @@
 import Button from "../components/Button";
 import { alert, useAlert } from "../hooks/useAlert";
 import useAuth from "../hooks/useAuth";
+import MainLayout from "../layout/MainLayout";
 import api from "../services/axios.service";
 
 const Post = () => {
@@ -28,12 +29,13 @@ const Post = () => {
             });
     };
     return (
-        <div className="flex justify-center items-center min-h-screen">
-            <div className="w-1/6">
-                <h1>Welcome, {user?.username}</h1>
-                <Button onclick={handleLogout}>logout</Button>
-            </div>
-        </div>
+        <MainLayout></MainLayout>
+        // <div className="flex justify-center items-center min-h-screen">
+        //     <div className="w-1/6">
+        //         <h1>Welcome, {user?.username}</h1>
+        //         <Button onclick={handleLogout}>logout</Button>
+        //     </div>
+        // </div>
     );
 };
 
