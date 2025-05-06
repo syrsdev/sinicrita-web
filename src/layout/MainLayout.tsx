@@ -1,14 +1,17 @@
-import Sidebar from "./Sidebar/Sidebar"
+import Sidebar from "./Sidebar";
 
-const MainLayout = ({sidebar}: any) => {
+const MainLayout = ({ sidebar, children, title }: any) => {
   return (
-    <div className="flex bg-main">
+    <div className="flex ">
       <Sidebar>{sidebar}</Sidebar>
-      <div className="w-4/5 min-h-screen">
-        <div className="w-full bg-primary h-[70px] text-white">s</div>
+      <div className="w-3/4 ml-[25%] overflow-y-auto">
+        <div className="w-3/4 bg-primary h-[70px] text-[20px] text-white fixed top-0 z-10 flex justify-center font-bold items-center">
+          {title}
+        </div>
+        <p className="mt-[70px]">{children}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;
