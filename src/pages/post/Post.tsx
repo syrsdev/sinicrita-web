@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import PostCard from "../components/post/Card";
-import MainSidebar from "../components/sidebar/MainSidebar";
-import { alert, useAlert } from "../hooks/useAlert";
-import useAuth from "../hooks/useAuth";
-import MainLayout from "../layout/MainLayout";
-import api from "../services/axios.service";
-import { getPost } from "../services/post.service";
+import PostCard from "../../components/post/Card";
+import MainSidebar from "../../components/sidebar/MainSidebar";
+import MainLayout from "../../layout/MainLayout";
+import { getPost } from "../../services/post.service";
+import { useAlert } from "../../hooks/useAlert";
 
 const Post = () => {
-  const { setUser } = useAuth();
   useAlert();
 
   const [post, setPost] = useState([]);
@@ -19,29 +16,8 @@ const Post = () => {
     );
   }, []);
 
-  const handleLogout = () => {
-    api
-      .post("/logout")
-      .then((res) => {
-        const message = {
-          title: "Success",
-          text: res.data.message,
-          icon: "success",
-        };
-
-        sessionStorage.setItem("alert", JSON.stringify(message));
-        setUser(null);
-      })
-      .catch((err) => {
-        alert.fire({
-          title: "Oops...",
-          text: err.response?.data?.message || "Something went wrong",
-          icon: "error",
-        });
-      });
-  };
   return (
-    <MainLayout title="Post" sidebar={<MainSidebar onclick={handleLogout} />}>
+    <MainLayout title="Cerita" sidebar={<MainSidebar />}>
       <div className="w-4/6 min-h-screen">
         {post.length == 0 ? (
           <div className="flex flex-col items-center gap-5 justify-center mt-5">

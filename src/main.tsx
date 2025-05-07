@@ -5,46 +5,55 @@ import App from "./pages/Home.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/Login.tsx";
 import RegisterPage from "./pages/Register.tsx";
-import Post from "./pages/Post.tsx";
+import Post from "./pages/post/Post.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import ProtectedRoute from "./route/ProtectedRoute.tsx";
 import GuestRoute from "./route/GuestRoute.tsx";
+import AddPost from "./pages/post/AddPost.tsx";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <App />,
-    },
-    {
-        path: "/login",
-        element: (
-            <GuestRoute>
-                <LoginPage />
-            </GuestRoute>
-        ),
-    },
-    {
-        path: "/register",
-        element: (
-            <GuestRoute>
-                <RegisterPage />
-            </GuestRoute>
-        ),
-    },
-    {
-        path: "/post",
-        element: (
-            <ProtectedRoute>
-                <Post />
-            </ProtectedRoute>
-        ),
-    },
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path: "/login",
+    element: (
+      <GuestRoute>
+        <LoginPage />
+      </GuestRoute>
+    ),
+  },
+  {
+    path: "/register",
+    element: (
+      <GuestRoute>
+        <RegisterPage />
+      </GuestRoute>
+    ),
+  },
+  {
+    path: "/post",
+    element: (
+      <ProtectedRoute>
+        <Post />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/post/add",
+    element: (
+      <ProtectedRoute>
+        <AddPost />
+      </ProtectedRoute>
+    ),
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-        <AuthProvider>
-            <RouterProvider router={router} />
-        </AuthProvider>
-    </StrictMode>
+  <StrictMode>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  </StrictMode>
 );
