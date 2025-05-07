@@ -35,6 +35,7 @@ const Post = () => {
               name={post.user.name}
               username={post.user.username}
               content={post.content}
+              time={post.created_at}
             />
           ))
         )}

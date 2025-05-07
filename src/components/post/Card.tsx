@@ -1,4 +1,5 @@
-const PostCard = ({ content, name, username }: any) => {
+const PostCard = ({ content, name, username, time }: any) => {
+  const formatedDate = new Date(time);
   return (
     <div className="flex w-full p-7 justify-between border-b-2 border-border">
       <div className="flex gap-5">
@@ -13,7 +14,13 @@ const PostCard = ({ content, name, username }: any) => {
       </div>
 
       <div className="flex flex-col">
-        <p>11.32 PM</p>
+        <p>
+          {formatedDate.toLocaleDateString("id-ID", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })}
+        </p>
       </div>
     </div>
   );
