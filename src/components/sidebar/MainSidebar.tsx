@@ -8,7 +8,7 @@ const MainSidebar = ({ onclick }: any) => {
   return (
     <div>
       <h1 className="font-bold text-center mt-5 text-[32px]">sinicrita</h1>
-      <div className="flex flex-col mt-14 text-[20px] gap-10">
+      <div className="flex flex-col mt-14 text-[20px] gap-8">
         <SideLink href="/post" hover="hover:bg-primary hover:text-white">
           <TbHomeFilled className="text-[26px]" /> Home
         </SideLink>
