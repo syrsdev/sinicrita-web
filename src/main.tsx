@@ -10,6 +10,7 @@ import { AuthProvider } from "./context/AuthContext.tsx";
 import ProtectedRoute from "./route/ProtectedRoute.tsx";
 import GuestRoute from "./route/GuestRoute.tsx";
 import AddPost from "./pages/post/AddPost.tsx";
+import "react-tooltip/dist/react-tooltip.css";
 
 const router = createBrowserRouter([
   {
