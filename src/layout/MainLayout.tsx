@@ -1,7 +1,10 @@
 import FloatingButton from "../components/FloatingButton";
+import { useAlert } from "../hooks/useAlert";
 import Sidebar from "./Sidebar";
 
 const MainLayout = ({ sidebar, children, title, hiddenAddButton }: any) => {
+  useAlert();
+
   return (
     <>
       <div className="flex min-h-[100dvh]">

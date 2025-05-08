@@ -3,11 +3,8 @@ import PostCard from "../../components/post/Card";
 import MainSidebar from "../../components/sidebar/MainSidebar";
 import MainLayout from "../../layout/MainLayout";
 import { getPost } from "../../services/post.service";
-import { useAlert } from "../../hooks/useAlert";
 
 const Post = () => {
-  useAlert();
-
   const [post, setPost] = useState([]);
 
   useEffect(() => {
