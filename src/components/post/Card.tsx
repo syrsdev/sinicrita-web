@@ -2,21 +2,19 @@ import { FaComments } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
-const PostCard = ({ content, name, username, time }: any) => {
+const PostCard = ({ content, username, time, userLogin, slug }: any) => {
   const formatedDate = new Date(time);
+  console.log(userLogin);
+
   return (
     <div className="flex w-full p-7 justify-between gap-10 border-b-2 border-border">
       <Tooltip anchorSelect=".tooltip" place="top" className="z-50">
-        Lihat detail dan tanggapi
+        Lihat detail {userLogin.role == "pendengar" && "dan tanggapi"}
       </Tooltip>
       <div className="flex gap-5">
-        {/* <img src="" alt="" /> */}
-        <div className="w-10 h-10 bg-amber-300 rounded-full"></div>
-        <div className="flex flex-col">
-          <p>
-            {name} <span>@{username}</span>
-          </p>
-          <p>{content}</p>
+        <div className="flex flex-col w-full">
+          <p className="text-primary">@{username}</p>
+          <p className="line-clamp-2">{content}</p>
         </div>
       </div>
 
@@ -29,7 +27,7 @@ const PostCard = ({ content, name, username, time }: any) => {
             year: "numeric",
           })}
         </p>
-        <Link to="/post" className="tooltip">
+        <Link to={`/post/${slug}`} className="tooltip">
           <FaComments className="text-2xl hover:text-primary" />
         </Link>
       </div>
