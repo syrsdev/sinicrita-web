@@ -11,6 +11,7 @@ import ProtectedRoute from "./route/ProtectedRoute.tsx";
 import GuestRoute from "./route/GuestRoute.tsx";
 import AddPost from "./pages/post/AddPost.tsx";
 import "react-tooltip/dist/react-tooltip.css";
+import DetailPost from "./pages/post/DetailPost.tsx";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Post />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/post/:slug",
+    element: (
+      <ProtectedRoute>
+        <DetailPost />
       </ProtectedRoute>
     ),
   },
