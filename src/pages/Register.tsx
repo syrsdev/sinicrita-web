@@ -44,12 +44,6 @@ const RegisterPage = () => {
         onchange={(e: any) => setUsername(e.target.value)}
       ></Input>
       <Input
-        label="Nama"
-        autoFocus={true}
-        placeholder="Masukan nama anda"
-        onchange={(e: any) => setName(e.target.value)}
-      ></Input>
-      <Input
         label="Password"
         type="password"
         placeholder="Password min 8 karakter"
