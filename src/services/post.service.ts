@@ -12,6 +12,16 @@ export const getPost = (callback: (res: AxiosResponse) => void) => {
             return callback(err.response);
         });
 };
+export const detailPost = (slug: string, callback: (res: AxiosResponse) => void) => {
+    api
+        .get(`${slug}`)
+        .then((res) => {
+            callback(res);
+        })
+        .catch((err) => {
+            return callback(err.response);
+        });
+};
 
 export const createPost = (data:object) => {
     api.post("/post", data)
