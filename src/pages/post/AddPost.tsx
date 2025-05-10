@@ -23,6 +23,7 @@ const AddPost = () => {
       title="Buat Cerita"
       sidebar={<MainSidebar />}
       hiddenAddButton={true}
+      userLogin={user}
     >
       <form onSubmit={handleSubmit} className="w-full flex flex-col p-8 gap-10">
         <textarea

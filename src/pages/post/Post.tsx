@@ -3,9 +3,11 @@ import PostCard from "../../components/post/Card";
 import MainSidebar from "../../components/sidebar/MainSidebar";
 import MainLayout from "../../layout/MainLayout";
 import { getPost } from "../../services/post.service";
+import useAuth from "../../hooks/useAuth";
 
 const Post = () => {
   const [post, setPost] = useState([]);
+  const { user } = useAuth();
 
   useEffect(() => {
     getPost((res) =>
@@ -14,7 +16,7 @@ const Post = () => {
   }, []);
 
   return (
-    <MainLayout title="Cerita" sidebar={<MainSidebar />}>
+    <MainLayout title="Cerita" sidebar={<MainSidebar />} userLogin={user}>
       <div className="w-4/6 min-h-screen">
         {post.length == 0 ? (
           <div className="flex flex-col items-center gap-5 justify-center mt-5">
@@ -29,10 +31,11 @@ const Post = () => {
           post.map((post: any) => (
             <PostCard
               key={post.id}
-              name={post.user.name}
               username={post.user.username}
               content={post.content}
               time={post.created_at}
+              userLogin={user}
+              slug={post.slug}
             />
           ))
         )}

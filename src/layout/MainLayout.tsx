@@ -2,7 +2,13 @@ import FloatingButton from "../components/FloatingButton";
 import { useAlert } from "../hooks/useAlert";
 import Sidebar from "./Sidebar";
 
-const MainLayout = ({ sidebar, children, title, hiddenAddButton }: any) => {
+const MainLayout = ({
+  sidebar,
+  children,
+  title,
+  hiddenAddButton,
+  userLogin,
+}: any) => {
   useAlert();
 
   return (
@@ -18,7 +24,9 @@ const MainLayout = ({ sidebar, children, title, hiddenAddButton }: any) => {
         </div>
       </div>
 
-      <FloatingButton hiddenAddButton={hiddenAddButton} />
+      {userLogin.role == "pencerita" && (
+        <FloatingButton hiddenAddButton={hiddenAddButton} />
+      )}
     </>
   );
 };
