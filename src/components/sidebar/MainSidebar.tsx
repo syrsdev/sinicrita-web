@@ -41,9 +41,6 @@ const MainSidebar = () => {
         <SideLink href="/dm" hover="hover:bg-primary hover:text-white">
           <MdEmail className="text-[26px]" /> Direct Message
         </SideLink>
-        <SideLink href="/profile" hover="hover:bg-primary hover:text-white">
-          <IoPersonCircle className="text-[26px]" /> Profile
-        </SideLink>
         <SideLink
           onclick={handleLogout}
           hover="hover:bg-red-500 hover:text-white"
