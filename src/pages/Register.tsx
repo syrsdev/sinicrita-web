@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import Input from "../components/input/Index";
-import Button from "../components/Button";
+import Button from "../components/button/Button";
 import Label from "../components/input/Label";
 import RadioButton from "../components/input/Radio";
 import { useState } from "react";
@@ -60,15 +60,15 @@ const RegisterPage = () => {
         <Label label="Role" />
         <div className="flex gap-6">
           <RadioButton
-            label="Pendengar"
-            name="role"
-            checked={true}
-            onchange={() => setRole("pendengar")}
-          />
-          <RadioButton
             label="Pencerita"
             name="role"
+            checked={true}
             onchange={() => setRole("pencerita")}
+          />
+          <RadioButton
+            label="Pendengar"
+            name="role"
+            onchange={() => setRole("pendengar")}
           />
         </div>
       </div>

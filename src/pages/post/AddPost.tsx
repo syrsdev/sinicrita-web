@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../../components/Button";
+import Button from "../../components/button/Button";
 import MainSidebar from "../../components/sidebar/MainSidebar";
 import MainLayout from "../../layout/MainLayout";
 import { createPost } from "../../services/post.service";

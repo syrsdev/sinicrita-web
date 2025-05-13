@@ -1,4 +1,4 @@
-import FloatingButton from "../components/FloatingButton";
+import FloatingButton from "../components/button/FloatingButton";
 import { useAlert } from "../hooks/useAlert";
 import Sidebar from "./Sidebar";
 
