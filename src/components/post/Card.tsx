@@ -4,7 +4,6 @@ import { Tooltip } from "react-tooltip";
 
 const PostCard = ({ content, username, time, userLogin, slug }: any) => {
   const formatedDate = new Date(time);
-  console.log(userLogin);
 
   return (
     <div className="flex w-full p-7 justify-between gap-10 border-b-2 border-border">
