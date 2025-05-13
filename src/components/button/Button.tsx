@@ -1,9 +1,9 @@
-import Loading from "./Loading";
+import Loading from "../Loading";
 
 const Button = ({
   children,
   type = "button",
-  bg = "bg-secondary",
+  bg = "bg-secondary hover:bg-[#31D5D3FF]",
   classname,
   disable,
   onclick,
