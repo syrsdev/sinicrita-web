@@ -10,7 +10,7 @@ const Post = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    getPost((res) =>
+    getPost(user?.username,(res) =>
       res.status == 404 ? setPost([]) : setPost(res.data.data)
     );
   }, []);

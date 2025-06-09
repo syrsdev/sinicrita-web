@@ -2,9 +2,9 @@ import { AxiosResponse } from "axios";
 import api from "./axios.service";
 import { alert } from "../hooks/useAlert";
 
-export const getPost = (callback: (res: AxiosResponse) => void) => {
+export const getPost = (user: String | undefined ,callback: (res: AxiosResponse) => void) => {
     api
-        .get("/post")
+        .get(`/post/${user}`)
         .then((res) => {
             callback(res);
         })
