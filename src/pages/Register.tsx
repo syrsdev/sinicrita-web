@@ -79,7 +79,7 @@ const RegisterPage = () => {
 
       <p className="text-center">
         Sudah punya akun?{" "}
-        <NavLink className="underline font-bold" to={"/login"}>
+        <NavLink className="underline font-bold" to={"/"}>
           Login
         </NavLink>
       </p>

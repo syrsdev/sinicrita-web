@@ -14,12 +14,12 @@ import "react-tooltip/dist/react-tooltip.css";
 import DetailPost from "./pages/post/DetailPost.tsx";
 
 const router = createBrowserRouter([
+  // {
+  //   path: "/",
+  //   element: <App />,
+  // },
   {
     path: "/",
-    element: <App />,
-  },
-  {
-    path: "/login",
     element: (
       <GuestRoute>
         <LoginPage />
