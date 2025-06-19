@@ -26,7 +26,7 @@ const PostCard = ({ content, username, time, userLogin, slug }: any) => {
             year: "numeric",
           })}
         </p>
-        <Link to={`/post/${slug}`} className="tooltip">
+        <Link to={`/post/detail/${slug}`} className="tooltip">
           <FaComments className="text-2xl hover:text-primary" />
         </Link>
       </div>
