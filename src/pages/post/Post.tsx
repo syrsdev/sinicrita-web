@@ -10,13 +10,13 @@ const Post = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    getPost(user?.username,(res) =>
+    getPost(user?.username, (res) =>
       res.status == 404 ? setPost([]) : setPost(res.data.data)
     );
   }, []);
 
   return (
-    <MainLayout title="Cerita" sidebar={<MainSidebar />} userLogin={user}>
+    <MainLayout sidebar={<MainSidebar />} userLogin={user}>
       <div className="w-4/6 min-h-screen">
         {post.length == 0 ? (
           <div className="flex flex-col items-center gap-5 justify-center mt-5">
