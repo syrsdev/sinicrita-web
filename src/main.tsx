@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./css/index.css";
-import App from "./pages/Home.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/Login.tsx";
 import RegisterPage from "./pages/Register.tsx";
@@ -14,10 +13,6 @@ import "react-tooltip/dist/react-tooltip.css";
 import DetailPost from "./pages/post/DetailPost.tsx";
 
 const router = createBrowserRouter([
-  // {
-  //   path: "/",
-  //   element: <App />,
-  // },
   {
     path: "/",
     element: (
@@ -43,7 +38,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/post/:slug",
+    path: "/post/detail/:slug",
     element: (
       <ProtectedRoute>
         <DetailPost />
