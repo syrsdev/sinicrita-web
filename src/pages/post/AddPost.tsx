@@ -27,7 +27,7 @@ const AddPost = () => {
     >
       <form onSubmit={handleSubmit} className="w-full flex flex-col p-8 gap-10">
         <textarea
-          minLength={5}
+          // minLength={5}
           autoFocus
           name="content"
           id="content"
