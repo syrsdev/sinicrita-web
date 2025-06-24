@@ -10,6 +10,8 @@ import {
 import Button from "../../components/button/Button";
 import ButtonSecondary from "../../components/button/ButtonSecondary";
 import { alert } from "../../hooks/useAlert";
+import Input from "../../components/input/Index";
+import { IoMdSend } from "react-icons/io";
 
 type Post = {
   user: {
@@ -74,7 +76,7 @@ const DetailPost = () => {
   };
 
   return (
-    <MainLayout  sidebar={<MainSidebar />} userLogin={user}>
+    <MainLayout sidebar={<MainSidebar />} userLogin={user}>
       <div className="p-10 bg-white w-full m-10 rounded-2xl flex flex-col gap-2">
         <div className="flex flex-col gap-1 mb-4">
           <h1 className="text-[22px] font-bold">
@@ -122,6 +124,21 @@ const DetailPost = () => {
                   Hapus
                 </ButtonSecondary>
               )}
+            </div>
+          </form>
+        )}
+
+        {user?.role == "pendengar" && (
+          <form className="flex justify-between items-center gap-3 bg-primary p-5 rounded-2xl mt-20">
+            <Input
+              autoFocus={true}
+              placeholder="Kirim Tanggapan..."
+              // onchange={(e: any) => setUsername(e.target.value)}
+            ></Input>
+            <div className="w-fit text-white">
+              <Button>
+                <IoMdSend />
+              </Button>
             </div>
           </form>
         )}
