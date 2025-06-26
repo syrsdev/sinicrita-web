@@ -11,6 +11,7 @@ import GuestRoute from "./route/GuestRoute.tsx";
 import AddPost from "./pages/post/AddPost.tsx";
 import "react-tooltip/dist/react-tooltip.css";
 import DetailPost from "./pages/post/DetailPost.tsx";
+import Chat from "./pages/chat/Chat.tsx";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <AddPost />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/chat",
+    element: (
+      <ProtectedRoute>
+        <Chat />
       </ProtectedRoute>
     ),
   },

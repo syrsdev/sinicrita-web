@@ -1,0 +1,17 @@
+import MainLayout from "../../layout/MainLayout";
+import useAuth from "../../hooks/useAuth";
+import SidebarChat from "../../components/sidebar/SidebarChat";
+
+const Chat = () => {
+  const { user } = useAuth();
+
+  return (
+    <MainLayout
+      title="Direct Message"
+      sidebar={<SidebarChat />}
+      userLogin={user}
+    ></MainLayout>
+  );
+};
+
+export default Chat;
