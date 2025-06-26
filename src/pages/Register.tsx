@@ -9,15 +9,14 @@ import { Register } from "../services/auth.service";
 
 const RegisterPage = () => {
   const [Username, setUsername] = useState("");
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   const [Password, setPassword] = useState("");
   const [PasswordConfirmation, setPasswordConfirmation] = useState("");
-  const [Role, setRole] = useState("pendengar");
+  const [Role, setRole] = useState("pencerita");
   const [buttonDisable, setbuttonDisable] = useState(false);
 
   const data = {
     username: Username,
-    name: name,
     password: Password,
     role: Role,
     password_confirmation: PasswordConfirmation,

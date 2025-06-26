@@ -73,7 +73,7 @@ export const Register = (data: {
                 icon: "success",
             };
             sessionStorage.setItem("alert", JSON.stringify(message));
-            window.location.href = "/login";
+            window.location.href = "/";
         })
         .catch((err) => {
             alert.fire({
