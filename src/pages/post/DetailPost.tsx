@@ -12,6 +12,8 @@ import ButtonSecondary from "../../components/button/ButtonSecondary";
 import { alert } from "../../hooks/useAlert";
 import Input from "../../components/input/Index";
 import { IoMdSend } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { createChat } from "../../services/chat.service";
 
 type Post = {
   user: {
@@ -74,6 +76,12 @@ const DetailPost = () => {
         }
       });
   };
+  const handleChatResponse = () => {
+    createChat({
+      user1_id: user?.id,
+      user2_id: post?.user?.id,
+    });
+  };
 
   return (
     <MainLayout sidebar={<MainSidebar />} userLogin={user}>
@@ -129,18 +137,13 @@ const DetailPost = () => {
         )}
 
         {user?.role == "pendengar" && (
-          <form className="flex justify-between items-center gap-3 bg-primary p-5 rounded-2xl mt-20">
-            <Input
-              autoFocus={true}
-              placeholder="Kirim Tanggapan..."
-              // onchange={(e: any) => setUsername(e.target.value)}
-            ></Input>
-            <div className="w-fit text-white">
-              <Button>
-                <IoMdSend />
-              </Button>
-            </div>
-          </form>
+          <Button
+            onclick={() => handleChatResponse()}
+            bg="bg-primary hover:bg-[#2DB7B4FF]"
+            classname="text-white  mt-20"
+          >
+            Kirim Respon di Chat
+          </Button>
         )}
       </div>
     </MainLayout>
