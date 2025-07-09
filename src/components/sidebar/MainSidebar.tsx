@@ -1,7 +1,6 @@
 import { TbHomeFilled } from "react-icons/tb";
 import SideLink from "./SideLink";
 import { MdEmail } from "react-icons/md";
-import { IoPersonCircle } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
 import api from "../../services/axios.service";
 import { alert } from "../../hooks/useAlert";
@@ -14,13 +13,13 @@ const MainSidebar = () => {
     api
       .post("/logout")
       .then((res) => {
-        const message = {
-          title: "Success",
-          text: res.data.message,
-          icon: "success",
-        };
+        // const message = {
+        //   title: "Success",
+        //   text: res.data.message,
+        //   icon: "success",
+        // };
 
-        sessionStorage.setItem("alert", JSON.stringify(message));
+        // sessionStorage.setItem("alert", JSON.stringify(message));
         setUser(null);
       })
       .catch((err) => {
