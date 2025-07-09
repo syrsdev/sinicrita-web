@@ -1,7 +1,6 @@
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 import api from "./axios.service";
-import { getCsrfToken } from "./auth.service";
 
 // Ensure TypeScript recognizes Pusher globally
 declare global {
