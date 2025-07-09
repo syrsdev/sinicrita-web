@@ -22,7 +22,7 @@ export const getUser = async () => {
         );
         return data.data;
     } catch (error) {
-        console.error("kiw", error);
+        console.error(error);
     }
 };
 
@@ -31,17 +31,7 @@ export const Login = (data: { username: string; password: string }) => {
     api.post("/login", data, {
         withCredentials: true,
     })
-        .then((res) => {
-            const message: {
-                title: string;
-                text: string;
-                icon: string;
-            } = {
-                title: "success",
-                text: res.data.message,
-                icon: "success",
-            };
-            sessionStorage.setItem("alert", JSON.stringify(message));
+        .then(() => {
             window.location.href = "/post";
         })
         .catch((err) => {
@@ -62,17 +52,7 @@ export const Register = (data: {
     api.post("/register", data, {
         withCredentials: true,
     })
-        .then((res) => {
-            const message: {
-                title: string;
-                text: string;
-                icon: string;
-            } = {
-                title: "success",
-                text: res.data.message,
-                icon: "success",
-            };
-            sessionStorage.setItem("alert", JSON.stringify(message));
+        .then(() => {
             window.location.href = "/";
         })
         .catch((err) => {

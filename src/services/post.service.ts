@@ -25,17 +25,7 @@ export const detailPost = (slug: string, callback: (res: AxiosResponse) => void)
 
 export const createPost = (data:object) => {
     api.post("/post", data)
-    .then((res) => {
-        const message: {
-            title: string;
-            text: string;
-            icon: string;
-        } = {
-            title: "success",
-            text: res.data.message,
-            icon: "success",
-        };
-            sessionStorage.setItem("alert", JSON.stringify(message));
+    .then(() => {
             window.location.href = "/post";
         })
     .catch((err) => {
@@ -49,17 +39,7 @@ export const createPost = (data:object) => {
 
 export const updatePost = (data:object, slug:String) => {
     api.put(`/post/detail/${slug}`, data)
-    .then((res) => {
-        const message: {
-            title: string;
-            text: string;
-            icon: string;
-        } = {
-            title: "success",
-            text: res.data.message,
-            icon: "success",
-        };
-            sessionStorage.setItem("alert", JSON.stringify(message));
+    .then(() => {
             window.location.href = `/post`;
         })
     .catch((err) => {
@@ -73,17 +53,7 @@ export const updatePost = (data:object, slug:String) => {
 
 export const deletePost = (slug:String) => {
     api.delete(`/post/detail/${slug}/delete`)
-    .then((res) => {
-        const message: {
-            title: string;
-            text: string;
-            icon: string;
-        } = {
-            title: "success",
-            text: res.data.message,
-            icon: "success",
-        };
-            sessionStorage.setItem("alert", JSON.stringify(message));
+    .then(() => {
             window.location.href = `/post`;
         })
     .catch((err) => {
