@@ -1,38 +1,41 @@
-import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
-import axios from 'axios';
+import Echo from "laravel-echo";
+import Pusher from "pusher-js";
+import api from "./axios.service";
+import { getCsrfToken } from "./auth.service";
 
-// Penting: supaya cookie Sanctum ikut dikirim
-axios.defaults.withCredentials = true;
-
+// Ensure TypeScript recognizes Pusher globally
 declare global {
   interface Window {
-    Pusher: any;
+    Pusher: typeof Pusher;
+    Echo: Echo<any>;
   }
 }
-
 window.Pusher = Pusher;
-
-const echo = new Echo({
-  broadcaster: 'pusher',
-  key: import.meta.env.VITE_REVERB_APP_KEY,
-  wsHost: import.meta.env.VITE_REVERB_HOST || 'localhost',
-  wsPort: parseInt(import.meta.env.VITE_REVERB_PORT || '8080'),
-  forceTLS: false,
-  encrypted: false,
-  disableStats: true,
-  authEndpoint: 'http://localhost:8000/broadcasting/auth',
-  auth: {
-    headers: {
-      Accept: 'application/json',
-      'X-XSRF-TOKEN': decodeURIComponent(
-        document.cookie
-          .split('; ')
-          .find(row => row.startsWith('XSRF-TOKEN='))
-          ?.split('=')[1] || ''
-      ),
-    },
+window.Echo = new Echo({
+  broadcaster: "reverb",
+  key: import.meta.env.VITE_REVERB_APP_KEY  , // Explicitly cast environment variable
+  authorizer: (channel: { name: any; }) => {
+    return {
+      authorize: (socketId: string, callback: (error: boolean, data: any) => void) => {
+        // getCsrfToken();
+        api
+          .post("broadcasting/auth", {
+            socket_id: socketId,
+            channel_name: channel.name,
+          })
+          .then((response) => {
+            callback(false, response.data);
+          })
+          .catch((error) => {
+            callback(true, error);
+          });
+      },
+    };
   },
+  wsHost: import.meta.env.VITE_REVERB_HOST as string,
+  wsPort: (import.meta.env.VITE_REVERB_PORT as unknown as number) ?? 80,
+  wssPort: (import.meta.env.VITE_REVERB_PORT as unknown as number) ?? 443,
+  forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? "https") === "https",
+  enabledTransports: ["ws", "wss"],
 });
-
-export default echo;
+export default window.Echo;
