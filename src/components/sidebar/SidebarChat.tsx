@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Echo from "../../services/echo";
 import useAuth from "../../hooks/useAuth";
 import { getListChat } from "../../services/chat.service";
+import { IoMdArrowBack } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 interface Session {
   id: number;
@@ -43,10 +45,16 @@ const SidebarChat = () => {
 
   return (
     <div>
-      <h1 className="font-bold text-center mt-5 text-[32px]">Direct Message</h1>
+      <h1 className="font-bold text-center mt-6 text-[24px] flex items-center justify-between gap-2 mx-6">
+        <Link to={"/post"}>
+          <IoMdArrowBack className="cursor-pointer" />
+        </Link>
+        Direct Message
+        <IoMdArrowBack style={{ visibility: "hidden" }} />
+      </h1>
       <div className="flex flex-col mt-14 text-[20px] gap-8">
         {sessions.length === 0 && (
-          <p className="text-gray-500">Belum ada sesi.</p>
+          <p className="text-gray-500 text-center">Belum ada pesan.</p>
         )}
         {sessions.map((s) => (
           <div
