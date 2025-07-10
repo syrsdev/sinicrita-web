@@ -2,7 +2,6 @@ import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 import api from "./axios.service";
 
-// Ensure TypeScript recognizes Pusher globally
 declare global {
   interface Window {
     Pusher: typeof Pusher;
@@ -12,11 +11,10 @@ declare global {
 window.Pusher = Pusher;
 window.Echo = new Echo({
   broadcaster: "reverb",
-  key: import.meta.env.VITE_REVERB_APP_KEY  , // Explicitly cast environment variable
+  key: import.meta.env.VITE_REVERB_APP_KEY,
   authorizer: (channel: { name: any; }) => {
     return {
       authorize: (socketId: string, callback: (error: boolean, data: any) => void) => {
-        // getCsrfToken();
         api
           .post("broadcasting/auth", {
             socket_id: socketId,
