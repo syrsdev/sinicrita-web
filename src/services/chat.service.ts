@@ -8,11 +8,16 @@ export const createChat = (data:object) => {
             window.location.href = "/chat";
         })
     .catch((err) => {
-        alert.fire({
-            title: "Oops...",
-            text: err.response.data.message,
-            icon: "error",
-        });
+        if (err.response.status === 301) {
+            window.location.href = `/chat/${err.response.data.id}`;
+            
+        }else{
+            alert.fire({
+                title: "Oops...",
+                text: err.response.data.message,
+                icon: "error",
+            });
+        }
     });
 }
 export const getListChat = (id: number,callback: (res: AxiosResponse) => void) => {
