@@ -4,12 +4,15 @@ import useAuth from "../../hooks/useAuth";
 import { getListChat } from "../../services/chat.service";
 import { IoMdArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { formatTimestamp } from "../../hooks/useFormatTime";
 
 interface Session {
   id: number;
   user1_id: number;
+  user1: { username: string };
   user2_id: number;
-  created_at: string;
+  user2: { username: string };
+  updated_at: string;
 }
 
 const SidebarChat = () => {
@@ -20,12 +23,10 @@ const SidebarChat = () => {
     if (user?.id) {
       getListChat(user.id, (res) => {
         setSessions(res.data.data);
-        console.log("Updated sessions:", res.data.data);
       });
     }
   };
 
-  // Panggil saat pertama kali dan saat ada event
   useEffect(() => {
     fetchSessions();
   }, [user]);
@@ -35,13 +36,14 @@ const SidebarChat = () => {
     const privateChannel = Echo.private(channelName);
 
     privateChannel.listen(".SessionCreated", () => {
-      fetchSessions(); // Refetch list chat
+      fetchSessions();
     });
 
     return () => {
       Echo.leave(`private-user.${user?.id}`);
     };
   }, [user?.id]);
+  console.log(sessions);
 
   return (
     <div>
@@ -52,18 +54,24 @@ const SidebarChat = () => {
         Direct Message
         <IoMdArrowBack style={{ visibility: "hidden" }} />
       </h1>
-      <div className="flex flex-col mt-14 text-[20px] gap-8">
+      <div className="flex flex-col mt-14 text-[16px] gap-3">
         {sessions.length === 0 && (
           <p className="text-gray-500 text-center">Belum ada pesan.</p>
         )}
-        {sessions.map((s) => (
+        {sessions.map((item) => (
           <div
-            key={s.id}
-            className="bg-white shadow p-4 rounded hover:bg-gray-100 transition"
+            key={item.id}
+            className="bg-white shadow px-6 py-4 rounded hover:bg-gray-100 transition cursor-pointer"
           >
-            <div className="font-semibold text-gray-800">Session #{s.id}</div>
-            <div className="text-sm text-gray-500">
-              {new Date(s.created_at).toLocaleString()}
+            <div className="flex justify-between items-center">
+              <div className="font-semibold text-gray-800">
+                {user?.role === "pencerita"
+                  ? item.user1.username
+                  : item.user2.username}
+              </div>
+              <div className="text-xs text-gray-500">
+                {formatTimestamp(item.updated_at)}
+              </div>
             </div>
           </div>
         ))}
