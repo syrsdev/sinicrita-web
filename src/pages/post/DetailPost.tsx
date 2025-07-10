@@ -10,9 +10,6 @@ import {
 import Button from "../../components/button/Button";
 import ButtonSecondary from "../../components/button/ButtonSecondary";
 import { alert } from "../../hooks/useAlert";
-import Input from "../../components/input/Index";
-import { IoMdSend } from "react-icons/io";
-import { Link } from "react-router-dom";
 import { createChat } from "../../services/chat.service";
 
 type Post = {
@@ -31,13 +28,17 @@ const DetailPost = () => {
   const [content, setContent] = useState("");
   const { user } = useAuth();
   const formatedDate = new Date(post?.created_at);
+  const [buttonDisable, setbuttonDisable] = useState(false);
 
   useEffect(() => {
+    setbuttonDisable(true);
+
     detailPost(window.location.pathname, (res) => {
       if (res.status == 404) {
         setPost({} as Post);
       } else {
         setPost(res.data.data);
+        setbuttonDisable(false);
       }
     });
   }, []);
@@ -81,6 +82,11 @@ const DetailPost = () => {
       user1_id: user?.id,
       user2_id: post?.user?.id,
     });
+    setbuttonDisable(true);
+
+    setTimeout(() => {
+      setbuttonDisable(false);
+    }, 1000);
   };
 
   return (
@@ -141,6 +147,7 @@ const DetailPost = () => {
             onclick={() => handleChatResponse()}
             bg="bg-primary hover:bg-[#2DB7B4FF]"
             classname="text-white  mt-20"
+            disable={buttonDisable}
           >
             Kirim Respon di Chat
           </Button>

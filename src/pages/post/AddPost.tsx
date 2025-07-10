@@ -8,6 +8,7 @@ import useAuth from "../../hooks/useAuth";
 const AddPost = () => {
   const [content, setContent] = useState("");
   const { user } = useAuth();
+  const [buttonDisable, setbuttonDisable] = useState(false);
 
   const data = {
     user_id: user?.id,
@@ -17,6 +18,11 @@ const AddPost = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     createPost(data);
+    setbuttonDisable(true);
+
+    setTimeout(() => {
+      setbuttonDisable(false);
+    }, 1000);
   };
   return (
     <MainLayout
@@ -36,7 +42,12 @@ const AddPost = () => {
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
 
-        <Button type="submit" classname="text-white" bg="bg-primary">
+        <Button
+          disable={buttonDisable}
+          type="submit"
+          classname="text-white"
+          bg="bg-primary"
+        >
           Kirim
         </Button>
       </form>
