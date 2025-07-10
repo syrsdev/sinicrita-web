@@ -7,7 +7,6 @@ const Chat = () => {
 
   return (
     <MainLayout
-      title="Direct Message"
       sidebar={<SidebarChat />}
       userLogin={user}
       hiddenAddButton={true}
