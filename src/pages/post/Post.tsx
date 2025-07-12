@@ -17,8 +17,8 @@ const Post = () => {
 
   return (
     <MainLayout sidebar={<MainSidebar />} userLogin={user}>
-      <div className="w-4/6 min-h-screen">
-        {post.length == 0 ? (
+      <div className="w-4/6 h-screen overflow-y-auto pb-[70px]">
+        {post.length == 0 || post == null ? (
           <div className="flex flex-col items-center gap-5 justify-center mt-5">
             <img
               src="./assets/post-not-found.svg"
