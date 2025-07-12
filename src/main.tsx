@@ -12,6 +12,7 @@ import AddPost from "./pages/post/AddPost.tsx";
 import "react-tooltip/dist/react-tooltip.css";
 import DetailPost from "./pages/post/DetailPost.tsx";
 import Chat from "./pages/chat/Chat.tsx";
+import DetailChat from "./pages/chat/DetailChat.tsx";
 
 const router = createBrowserRouter([
   {
@@ -54,16 +55,16 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+  // {
+  //   path: "/chat",
+  //   element: (
+  //     <ProtectedRoute>
+  //       <Chat />
+  //     </ProtectedRoute>
+  //   ),
+  // },
   {
-    path: "/chat",
-    element: (
-      <ProtectedRoute>
-        <Chat />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/chat/:id",
+    path: "/chat/:id?",
     element: (
       <ProtectedRoute>
         <Chat />

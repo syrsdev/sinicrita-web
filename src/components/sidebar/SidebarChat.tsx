@@ -15,7 +15,12 @@ interface Session {
   updated_at: string;
 }
 
-const SidebarChat = () => {
+interface SidebarChatProps {
+  isActive: string;
+  setIsActive: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SidebarChat = ({ isActive, setIsActive }: SidebarChatProps) => {
   const [sessions, setSessions] = useState<Session[]>([]);
   const { user } = useAuth();
 
@@ -29,7 +34,7 @@ const SidebarChat = () => {
 
   useEffect(() => {
     fetchSessions();
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     const channelName = `user.${user?.id}`;
@@ -43,7 +48,6 @@ const SidebarChat = () => {
       Echo.leave(`private-user.${user?.id}`);
     };
   }, [user?.id]);
-  console.log(sessions);
 
   return (
     <div>
@@ -59,9 +63,13 @@ const SidebarChat = () => {
           <p className="text-gray-500 text-center">Belum ada pesan.</p>
         )}
         {sessions.map((item) => (
-          <div
+          <Link
+            to={`/chat/${item.id}`}
+            onClick={() => setIsActive(item.id.toString())}
             key={item.id}
-            className="bg-white shadow px-6 py-4 rounded hover:bg-gray-100 transition cursor-pointer"
+            className={`hover:bg-white shadow px-6 py-4 rounded transition cursor-pointer ${
+              parseInt(isActive) === item.id ? "bg-white" : ""
+            }`}
           >
             <div className="flex justify-between items-center">
               <div className="font-semibold text-gray-800">
@@ -73,7 +81,7 @@ const SidebarChat = () => {
                 {formatTimestamp(item.updated_at)}
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
