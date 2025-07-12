@@ -4,15 +4,29 @@ import SidebarChat from "../../components/sidebar/SidebarChat";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DetailChat from "./DetailChat";
+import { getChatSession } from "../../services/chat.service";
+
+interface Session {
+  id: number;
+  user1_id: number;
+  user1: { username: string };
+  username: string;
+  user2_id: number;
+  user2: { username: string };
+}
 
 const Chat = () => {
   const { user } = useAuth();
   const [isActive, setIsActive] = useState("");
+  const [targetChat, setTargetChat] = useState<Session>({} as Session);
   const { id } = useParams();
 
   useEffect(() => {
     if (id) {
       setIsActive(id);
+      getChatSession(parseInt(id), (res) => {
+        setTargetChat(res.data.data);
+      });
     } else {
       setIsActive("chat");
     }
@@ -20,6 +34,11 @@ const Chat = () => {
 
   return (
     <MainLayout
+      title={
+        isActive != "chat" && user?.id == targetChat?.user1_id
+          ? targetChat?.user2?.username
+          : targetChat?.user1?.username
+      }
       sidebar={<SidebarChat isActive={isActive} setIsActive={setIsActive} />}
       userLogin={user}
       hiddenAddButton={true}
@@ -46,7 +65,7 @@ const Chat = () => {
           </div>
         </div>
       ) : (
-        <DetailChat></DetailChat>
+        <DetailChat id={parseInt(isActive)}></DetailChat>
       )}
     </MainLayout>
   );
