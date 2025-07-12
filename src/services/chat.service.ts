@@ -9,7 +9,7 @@ export const createChat = (data:object) => {
         })
     .catch((err) => {
         if (err.response.status === 301) {
-            window.location.href = `/chat/${err.response.data.id}`;
+            window.location.href = `/chat/detail/${err.response.data.id}`;
             
         }else{
             alert.fire({
