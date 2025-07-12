@@ -12,14 +12,7 @@ const MainSidebar = () => {
   const handleLogout = () => {
     api
       .post("/logout")
-      .then((res) => {
-        // const message = {
-        //   title: "Success",
-        //   text: res.data.message,
-        //   icon: "success",
-        // };
-
-        // sessionStorage.setItem("alert", JSON.stringify(message));
+      .then(() => {
         setUser(null);
       })
       .catch((err) => {
