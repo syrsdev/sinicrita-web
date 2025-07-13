@@ -1,31 +1,33 @@
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom";
 import FieldChat from "./FieldChat";
-import { getDetailChat } from "../../services/chat.service";
-import { useEffect, useState } from "react";
 
-const DetailChat = ({ id }: { id: number }) => {
+interface DetailChat {
+  id: number;
+  message: string;
+  sender_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ChatProps {
+  chat: DetailChat[];
+}
+
+const DetailChat = ({ chat }: ChatProps) => {
   const { user } = useAuth();
-  const [chat, setChat] = useState([]);
-
-  useEffect(() => {
-    if (!Number.isNaN(id)) {
-      getDetailChat(id, (res) => {
-        setChat(res.data.data);
-      });
-    }
-  }, [id]);
   console.log(chat);
 
   return (
     <div className="flex flex-col w-full justify-between pb-[70px] h-screen">
-      <div className="w-full">
-        <div className="flex flex-col gap-2 ">
+      <div className="w-full mt-10 px-12">
+        <div className="flex flex-col gap-2">
           {chat.map((item: any) => (
             <p
               key={item.id}
-              className={`bg-white p-5 ${
-                item.sender_id == user?.id ? "ms-auto" : "me-auto"
+              className={`px-5 py-3 rounded-xl w-fit text-wrap max-w-2/5 ${
+                item.sender_id == user?.id
+                  ? "ms-auto bg-primary text-white"
+                  : "me-auto bg-white"
               }`}
             >
               {item.message}

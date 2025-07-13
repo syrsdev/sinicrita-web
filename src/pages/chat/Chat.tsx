@@ -4,7 +4,7 @@ import SidebarChat from "../../components/sidebar/SidebarChat";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DetailChat from "./DetailChat";
-import { getChatSession } from "../../services/chat.service";
+import { getDetailChat } from "../../services/chat.service";
 
 interface Session {
   id: number;
@@ -19,14 +19,19 @@ const Chat = () => {
   const { user } = useAuth();
   const [isActive, setIsActive] = useState("");
   const [targetChat, setTargetChat] = useState<Session>({} as Session);
+  const [chat, setChat] = useState([]);
+
   const { id } = useParams();
 
   useEffect(() => {
     if (id) {
       setIsActive(id);
-      getChatSession(parseInt(id), (res) => {
-        setTargetChat(res.data.data);
-      });
+      if (!Number.isNaN(id)) {
+        getDetailChat(parseInt(id), (res) => {
+          setChat(res.data.data.chat);
+          setTargetChat(res.data.data.session);
+        });
+      }
     } else {
       setIsActive("chat");
     }
@@ -65,7 +70,7 @@ const Chat = () => {
           </div>
         </div>
       ) : (
-        <DetailChat id={parseInt(isActive)}></DetailChat>
+        <DetailChat chat={chat}></DetailChat>
       )}
     </MainLayout>
   );
