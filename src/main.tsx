@@ -2,8 +2,6 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./css/index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LoginPage from "./pages/Login.tsx";
-import RegisterPage from "./pages/Register.tsx";
 import Post from "./pages/post/Post.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import ProtectedRoute from "./route/ProtectedRoute.tsx";
@@ -12,6 +10,8 @@ import AddPost from "./pages/post/AddPost.tsx";
 import "react-tooltip/dist/react-tooltip.css";
 import DetailPost from "./pages/post/DetailPost.tsx";
 import Chat from "./pages/chat/Chat.tsx";
+import LoginPage from "./pages/auth/Login.tsx";
+import RegisterPage from "./pages/auth/Register.tsx";
 
 const router = createBrowserRouter([
   {

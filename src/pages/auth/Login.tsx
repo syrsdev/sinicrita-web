@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
-import AuthLayout from "../layout/AuthLayout";
-import Input from "../components/input/Index";
-import Button from "../components/button/Button";
 import { useState } from "react";
-import { Login } from "../services/auth.service";
-import { useAlert } from "../hooks/useAlert";
+import { useAlert } from "../../hooks/useAlert";
+import { Login } from "../../services/auth.service";
+import AuthLayout from "../../layout/AuthLayout";
+import Input from "../../components/input/Index";
+import Button from "../../components/button/Button";
 
 const LoginPage = () => {
   const [Username, setUsername] = useState("");

@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import AuthLayout from "../layout/AuthLayout";
-import Input from "../components/input/Index";
-import Button from "../components/button/Button";
-import Label from "../components/input/Label";
-import RadioButton from "../components/input/Radio";
 import { useState } from "react";
-import { Register } from "../services/auth.service";
+import { Register } from "../../services/auth.service";
+import AuthLayout from "../../layout/AuthLayout";
+import Input from "../../components/input/Index";
+import Label from "../../components/input/Label";
+import RadioButton from "../../components/input/Radio";
+import Button from "../../components/button/Button";
 
 const RegisterPage = () => {
   const [Username, setUsername] = useState("");
