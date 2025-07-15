@@ -7,13 +7,14 @@ const Button = ({
   classname,
   disable,
   onclick,
+  rounded = "rounded-lg",
 }: any) => {
   return (
     <button
       type={type}
       disabled={disable}
       onClick={onclick}
-      className={`w-full gap-2 flex justify-center items-center ${bg} py-2 px-3 rounded-lg ${
+      className={`w-full gap-2 flex justify-center items-center ${bg} py-2 px-3 ${rounded} ${
         disable ? "cursor-not-allowed" : "cursor-pointer"
       } ${classname}`}
     >
