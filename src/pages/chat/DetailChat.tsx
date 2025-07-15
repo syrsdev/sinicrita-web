@@ -11,15 +11,15 @@ interface DetailChat {
 
 interface ChatProps {
   chat: DetailChat[];
+  session_id: number | undefined;
 }
 
-const DetailChat = ({ chat }: ChatProps) => {
+const DetailChat = ({ chat, session_id }: ChatProps) => {
   const { user } = useAuth();
-  console.log(chat);
 
   return (
     <div className="flex flex-col w-full justify-between pb-[70px] h-screen">
-      <div className="w-full mt-10 px-12">
+      <div className="w-full py-10 px-12 overflow-y-auto">
         <div className="flex flex-col gap-2">
           {chat.map((item: any) => (
             <p
@@ -35,7 +35,7 @@ const DetailChat = ({ chat }: ChatProps) => {
           ))}
         </div>
       </div>
-      <FieldChat></FieldChat>
+      <FieldChat session_id={session_id} sender_id={user?.id}></FieldChat>
     </div>
   );
 };

@@ -67,3 +67,20 @@ export const getDetailChat = (
       }
     });
 };
+
+export const sendMessage = (data: object) => {
+  api
+    .post("/chat/message", data)
+    .then(() => {})
+    .catch((err) => {
+      if (err.response.status != 401) {
+        alert.fire({
+          title: "Oops...",
+          text: err.response.data.message,
+          icon: "error",
+        });
+      } else {
+        window.location.href = "/";
+      }
+    });
+};

@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DetailChat from "./DetailChat";
 import { getDetailChat } from "../../services/chat.service";
+import Echo from "../../services/echo";
 
 interface Session {
   id: number;
@@ -15,27 +16,62 @@ interface Session {
   user2: { username: string };
 }
 
+interface Chat {
+  id: number;
+  message: string;
+  sender_id: number;
+  session_id: number;
+  post_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
 const Chat = () => {
   const { user } = useAuth();
   const [isActive, setIsActive] = useState("");
   const [targetChat, setTargetChat] = useState<Session>({} as Session);
-  const [chat, setChat] = useState([]);
+  const [chat, setChat] = useState<Chat[]>([]);
 
   const { id } = useParams();
+
+  const fetchChat = async (id: string) => {
+    getDetailChat(parseInt(id), (res) => {
+      setChat(res.data.data.chat);
+      setTargetChat(res.data.data.session);
+    });
+  };
 
   useEffect(() => {
     if (id) {
       setIsActive(id);
       if (!Number.isNaN(id)) {
-        getDetailChat(parseInt(id), (res) => {
-          setChat(res.data.data.chat);
-          setTargetChat(res.data.data.session);
-        });
+        fetchChat(id);
       }
     } else {
       setIsActive("chat");
     }
   }, [id]);
+
+  useEffect(() => {
+    if (!id) return;
+
+    const channelName = `chat.${id}`;
+    const privateChannel = Echo.private(channelName);
+
+    privateChannel.listen(".MessageSent", (e: any) => {
+      console.log(e);
+
+      setChat((prev) => {
+        const exists = prev.some((m) => m.id === e.message.id);
+        return exists ? prev : [...prev, e.message];
+      });
+    });
+
+    return () => {
+      Echo.leave(`private-chat.${id}`);
+    };
+  }, [id]);
+  console.log(chat);
 
   return (
     <MainLayout
@@ -70,7 +106,7 @@ const Chat = () => {
           </div>
         </div>
       ) : (
-        <DetailChat chat={chat}></DetailChat>
+        <DetailChat chat={chat} session_id={targetChat.id}></DetailChat>
       )}
     </MainLayout>
   );
