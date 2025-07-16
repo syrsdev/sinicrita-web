@@ -1,5 +1,8 @@
+import { useEffect, useRef } from "react";
 import useAuth from "../../hooks/useAuth";
 import FieldChat from "./FieldChat";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
 
 interface DetailChat {
   id: number;
@@ -16,26 +19,63 @@ interface ChatProps {
 
 const DetailChat = ({ chat, session_id }: ChatProps) => {
   const { user } = useAuth();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat]);
+
+  const groupedChat = chat.reduce(
+    (groups: Record<string, DetailChat[]>, message) => {
+      const dateKey = dayjs(message.created_at).format("YYYY-MM-DD");
+      if (!groups[dateKey]) {
+        groups[dateKey] = [];
+      }
+      groups[dateKey].push(message);
+      return groups;
+    },
+    {}
+  );
 
   return (
     <div className="flex flex-col w-full justify-between pb-[70px] h-screen">
-      <div className="w-full py-10 px-12 overflow-y-auto">
-        <div className="flex flex-col gap-2">
-          {chat.map((item: any) => (
-            <p
-              key={item.id}
-              className={`px-5 py-3 rounded-xl w-fit text-wrap max-w-2/5 ${
-                item.sender_id == user?.id
-                  ? "ms-auto bg-primary text-white"
-                  : "me-auto bg-white"
-              }`}
-            >
-              {item.message}
-            </p>
+      <div className="w-full py-5 px-12 overflow-y-auto">
+        <div className="flex flex-col gap-4">
+          {Object.entries(groupedChat).map(([date, messages]) => (
+            <div key={date} className="flex flex-col gap-2">
+              <div className="text-center text-gray-500 font-medium my-5">
+                {dayjs(date).locale("id").format("D MMMM YYYY")}
+              </div>
+
+              {messages.map((item) => (
+                <div
+                  key={item.id}
+                  className={`flex flex-col gap-1 w-full mb-2`}
+                >
+                  <p
+                    className={`px-5 py-3 rounded-xl w-max text-wrap max-w-3/5 ${
+                      item.sender_id === user?.id
+                        ? "ms-auto bg-primary text-white"
+                        : "me-auto bg-white"
+                    }`}
+                  >
+                    {item.message}
+                  </p>
+                  <span
+                    className={`text-xs text-gray-400 ${
+                      item.sender_id === user?.id ? "ms-auto" : "me-auto"
+                    }`}
+                  >
+                    {dayjs(item.updated_at).format("HH:mm")}
+                  </span>
+                </div>
+              ))}
+            </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
       </div>
-      <FieldChat session_id={session_id} sender_id={user?.id}></FieldChat>
+      <FieldChat session_id={session_id} sender_id={user?.id} />
     </div>
   );
 };
