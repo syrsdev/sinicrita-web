@@ -6,9 +6,10 @@ import { sendMessage } from "../../services/chat.service";
 interface SendMessageProps {
   session_id: number | undefined;
   sender_id: number | undefined;
+  setIsSent: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FieldChat = ({ session_id, sender_id }: SendMessageProps) => {
+const FieldChat = ({ session_id, sender_id, setIsSent }: SendMessageProps) => {
   const [value, setValue] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -28,8 +29,9 @@ const FieldChat = ({ session_id, sender_id }: SendMessageProps) => {
 
   const handleSendMessage = (e: any) => {
     e.preventDefault();
-    sendMessage(data);
     setValue("");
+    window.scrollChatToBottom?.();
+    sendMessage(data);
   };
   return (
     <form
@@ -48,8 +50,12 @@ const FieldChat = ({ session_id, sender_id }: SendMessageProps) => {
         className="w-full resize-none overflow-hidden rounded border bg-white border-gray-300 px-4 py-2 focus:outline-none focus:ring focus:ring-blue-300"
       />
       <div className="w-[10%] text-white ">
-        <Button type="submit" rounded="rounded">
-          <IoMdSend />
+        <Button
+          type="submit"
+          rounded="rounded"
+          onclick={() => setIsSent(false)}
+        >
+          <IoMdSend className="text-xl" />
         </Button>
       </div>
     </form>

@@ -31,6 +31,7 @@ const Chat = () => {
   const [isActive, setIsActive] = useState("");
   const [targetChat, setTargetChat] = useState<Session>({} as Session);
   const [chat, setChat] = useState<Chat[]>([]);
+  const [isSent, setIsSent] = useState(true);
 
   const { id } = useParams();
 
@@ -59,12 +60,11 @@ const Chat = () => {
     const privateChannel = Echo.private(channelName);
 
     privateChannel.listen(".MessageSent", (e: any) => {
-      console.log(e);
-
       setChat((prev) => {
         const exists = prev.some((m) => m.id === e.message.id);
         return exists ? prev : [...prev, e.message];
       });
+      setIsSent(true);
     });
 
     return () => {
@@ -106,7 +106,12 @@ const Chat = () => {
           </div>
         </div>
       ) : (
-        <DetailChat chat={chat} session_id={targetChat.id}></DetailChat>
+        <DetailChat
+          chat={chat}
+          session_id={targetChat.id}
+          setIsSent={setIsSent}
+          isSent={isSent}
+        ></DetailChat>
       )}
     </MainLayout>
   );
