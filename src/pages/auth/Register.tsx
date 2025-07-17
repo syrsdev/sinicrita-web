@@ -3,16 +3,16 @@ import { useState } from "react";
 import { Register } from "../../services/auth.service";
 import AuthLayout from "../../layout/AuthLayout";
 import Input from "../../components/input/Index";
-import Label from "../../components/input/Label";
-import RadioButton from "../../components/input/Radio";
 import Button from "../../components/button/Button";
+// import Label from "../../components/input/Label";
+// import RadioButton from "../../components/input/Radio";
 
 const RegisterPage = () => {
   const [Username, setUsername] = useState("");
   // const [name, setName] = useState("");
   const [Password, setPassword] = useState("");
   const [PasswordConfirmation, setPasswordConfirmation] = useState("");
-  const [Role, setRole] = useState("pencerita");
+  const [Role] = useState("pencerita");
   const [buttonDisable, setbuttonDisable] = useState(false);
 
   const data = {
@@ -55,7 +55,7 @@ const RegisterPage = () => {
         onchange={(e: any) => setPasswordConfirmation(e.target.value)}
       ></Input>
 
-      <div className="flex-col">
+      {/* <div className="flex-col">
         <Label label="Role" />
         <div className="flex gap-6">
           <RadioButton
@@ -70,7 +70,7 @@ const RegisterPage = () => {
             onchange={() => setRole("pendengar")}
           />
         </div>
-      </div>
+      </div> */}
 
       <Button type="submit" disable={buttonDisable} classname="mt-4">
         Daftar
