@@ -5,8 +5,8 @@ import api from "./axios.service";
 export const createChat = (data: object) => {
   api
     .post("/chat/session", data)
-    .then(() => {
-      window.location.href = "/chat";
+    .then((res) => {
+      window.location.href = `/chat/${res.data.data.id}`;
     })
     .catch((err) => {
       if (err.response.status != 401) {
