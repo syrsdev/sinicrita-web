@@ -7,7 +7,7 @@ export const formatTimestamp = (timestamp: string): string => {
   const diffHours = now.diff(time, "hour");
 
   if (diffHours < 24) {
-    return time.format("hh:mm A");
+    return time.format("HH:mm");
   } else {
     return time.format("D MMM YY");
   }
