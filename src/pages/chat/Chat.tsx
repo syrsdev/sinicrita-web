@@ -71,7 +71,6 @@ const Chat = () => {
       Echo.leave(`private-chat.${id}`);
     };
   }, [id]);
-  console.log(chat);
 
   return (
     <MainLayout
