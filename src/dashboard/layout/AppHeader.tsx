@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
-import { Link } from "react-router";
 import { useSidebar } from "../context/SidebarContext";
-import { ThemeToggleButton } from "../components/common/ThemeToggleButton";
-import NotificationDropdown from "../components/header/NotificationDropdown";
 import UserDropdown from "../components/header/UserDropdown";
+import useAuth from "../../hooks/useAuth";
 
 const AppHeader: React.FC = () => {
+  const { user } = useAuth();
+
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
 
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
@@ -109,7 +109,7 @@ const AppHeader: React.FC = () => {
           } items-center justify-between w-full gap-4 px-5 py-4 lg:flex shadow-theme-md lg:justify-end lg:px-0 lg:shadow-none`}
         >
           {/* <!-- User Area --> */}
-          <UserDropdown />
+          <UserDropdown user={user} />
         </div>
       </div>
     </header>
