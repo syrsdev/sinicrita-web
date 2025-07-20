@@ -2,27 +2,15 @@ import { TbHomeFilled } from "react-icons/tb";
 import SideLink from "./SideLink";
 import { MdEmail } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
-import api from "../../services/axios.service";
-import { alert } from "../../hooks/useAlert";
 import useAuth from "../../hooks/useAuth";
+import { Logout } from "../../services/auth.service";
 
 const MainSidebar = () => {
   const { setUser } = useAuth();
-
   const handleLogout = () => {
-    api
-      .post("/logout")
-      .then(() => {
-        setUser(null);
-      })
-      .catch((err) => {
-        alert.fire({
-          title: "Oops...",
-          text: err.response?.data?.message || "Something went wrong",
-          icon: "error",
-        });
-      });
+    Logout(() => setUser(null));
   };
+
   return (
     <div className="flex flex-col justify-between h-screen">
       <div>

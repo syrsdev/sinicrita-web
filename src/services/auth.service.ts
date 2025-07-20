@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import api from "./axios.service.ts";
 import { alert } from "../hooks/useAlert.ts";
 
@@ -64,6 +64,21 @@ export const Register = (data: {
       alert.fire({
         title: "Oops...",
         text: err.response.data.message,
+        icon: "error",
+      });
+    });
+};
+
+export const Logout = (callback: () => void) => {
+  api
+    .post("/logout")
+    .then(() => {
+      callback();
+    })
+    .catch((err) => {
+      alert.fire({
+        title: "Oops...",
+        text: err.response?.data?.message || "Something went wrong",
         icon: "error",
       });
     });
