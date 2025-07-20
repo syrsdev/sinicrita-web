@@ -31,8 +31,12 @@ export const Login = (data: { username: string; password: string }) => {
     .post("/login", data, {
       withCredentials: true,
     })
-    .then(() => {
-      window.location.href = "/post";
+    .then((res) => {
+      if (res.data.role === "admin") {
+        window.location.href = "/dashboard";
+      } else {
+        window.location.href = "/post";
+      }
     })
     .catch((err) => {
       alert.fire({

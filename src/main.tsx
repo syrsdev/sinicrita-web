@@ -12,6 +12,11 @@ import DetailPost from "./pages/post/DetailPost.tsx";
 import Chat from "./pages/chat/Chat.tsx";
 import LoginPage from "./pages/auth/Login.tsx";
 import RegisterPage from "./pages/auth/Register.tsx";
+import Dashboard from "./dashboard/pages/Dashboard/Home.tsx";
+import AppLayout from "./dashboard/layout/AppLayout.tsx";
+import { ThemeProvider } from "./dashboard/context/ThemeContext.tsx";
+import AdminRoute from "./route/AdminRoute.tsx";
+// import AdminRoute from "./route/AdminRoute.tsx";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +34,21 @@ const router = createBrowserRouter([
         <RegisterPage />
       </GuestRoute>
     ),
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <AdminRoute>
+        <AppLayout />
+      </AdminRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      // add other dashboard children here
+    ],
   },
   {
     path: "/post",
@@ -66,8 +86,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </ThemeProvider>
   </StrictMode>
 );
