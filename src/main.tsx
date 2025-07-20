@@ -12,7 +12,7 @@ import DetailPost from "./pages/post/DetailPost.tsx";
 import Chat from "./pages/chat/Chat.tsx";
 import LoginPage from "./pages/auth/Login.tsx";
 import RegisterPage from "./pages/auth/Register.tsx";
-import Dashboard from "./dashboard/pages/Dashboard/Home.tsx";
+import Dashboard from "./dashboard/pages/Dashboard/Dashboard.tsx";
 import AppLayout from "./dashboard/layout/AppLayout.tsx";
 import { ThemeProvider } from "./dashboard/context/ThemeContext.tsx";
 import AdminRoute from "./route/AdminRoute.tsx";
