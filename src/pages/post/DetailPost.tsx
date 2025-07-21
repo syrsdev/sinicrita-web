@@ -6,6 +6,7 @@ import {
   deletePost,
   detailPost,
   updatePost,
+  updateStatus,
 } from "../../services/post.service";
 import Button from "../../components/button/Button";
 import ButtonSecondary from "../../components/button/ButtonSecondary";
@@ -19,6 +20,7 @@ type Post = {
   };
   content: string;
   slug: string;
+  status: string;
   created_at: string;
 };
 
@@ -77,6 +79,24 @@ const DetailPost = () => {
         }
       });
   };
+  const handleStatus = () => {
+    alert
+      .fire({
+        title: "Selesaikan Cerita",
+        text: "cerita tidak lagi dapat diedit, dihapus, dan mendapat respon. Yakin akan diselesaikan?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, selesaikan sekarang!",
+        cancelButtonText: "Batal",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          updateStatus({ status: "selesai" }, post?.slug);
+        }
+      });
+  };
   const handleChatResponse = () => {
     createChat({
       user1_id: user?.id,
@@ -94,6 +114,19 @@ const DetailPost = () => {
       <div className="pb-[70px] pt-10 px-10 h-screen overflow-y-auto w-full">
         <div className="p-10 bg-white w-full rounded-2xl flex flex-col gap-2">
           <div className="flex flex-col gap-1 mb-4">
+            <div className="ms-auto">
+              {post?.status != "selesai" ? (
+                user?.id == post?.user?.id && (
+                  <ButtonSecondary onclick={handleStatus}>
+                    Tutup dan selesaikan cerita
+                  </ButtonSecondary>
+                )
+              ) : (
+                <ButtonSecondary disable={true}>
+                  Cerita sudah selesai
+                </ButtonSecondary>
+              )}
+            </div>
             <h1 className="text-[22px] font-bold">
               Dibuat oleh{" "}
               <span className="text-primary">@{post?.user?.username}</span>
@@ -109,7 +142,7 @@ const DetailPost = () => {
           </div>
           {IsEdit == false && <p className="text-[16px]">{post?.content}</p>}
 
-          {user?.id == post?.user?.id && (
+          {user?.id == post?.user?.id && post?.status != "selesai" && (
             <form onSubmit={handleUpdate} method="post">
               {IsEdit == true && (
                 <textarea
@@ -142,7 +175,7 @@ const DetailPost = () => {
             </form>
           )}
 
-          {user?.role == "pendengar" && (
+          {user?.role == "pendengar" && post?.status != "selesai" && (
             <Button
               onclick={() => handleChatResponse()}
               bg="bg-primary hover:bg-[#2DB7B4FF]"

@@ -83,6 +83,24 @@ export const updatePost = (data: object, slug: String) => {
       }
     });
 };
+export const updateStatus = (data: object, slug: String) => {
+  api
+    .put(`/post/detail/${slug}/status`, data)
+    .then(() => {
+      window.location.href = `/post`;
+    })
+    .catch((err) => {
+      if (err.response.status != 401) {
+        alert.fire({
+          title: "Oops...",
+          text: err.response.data.message,
+          icon: "error",
+        });
+      } else {
+        window.location.href = "/";
+      }
+    });
+};
 
 export const deletePost = (slug: String) => {
   api
