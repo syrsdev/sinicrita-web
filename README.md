@@ -1,54 +1,57 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# sinicrita web
 
-Currently, two official plugins are available:
+Ini merupakan repository untuk frontend dari platform sinicrita, dibuat dan dikembangkan menggunakan library reactjs (typescript) 19 dan tailwindcss 4
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## Expanding the ESLint configuration
+**Framework & Library:** React Typescript, Tailwindcss (react-router, axios, pusher-js, sweetalert2, react-tooltip, react-icons, dayjs)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Authentication & Authorization
+- Post page
+- Direct Message Page (realtime)
+- Call (realtime)
+- Dashboard (Admin)
+- etc
+
+## 🔗 Backend Link
+<https://github.com/syrsdev/sinicrita-api>
+
+## Installation
+
+Clone Project
+
+```bash
+  git clone https://github.com/syrsdev/sinicrita-web
+  cd sinicrita-web
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open & Install sinicrita-web
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+  npm install
+```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+Copy .env file
+
+```bash
+   cp .env.example .env 
+```
+
+Setup .env
+
+```bash
+   VITE_REVERB_APP_ID={copy dari env api}
+   VITE_REVERB_APP_KEY={copy dari env api}
+   VITE_REVERB_APP_SECRET={copy dari env api}
+```
+
+## Run Locally
+
+Open Terminal
+
+```bash
+  npm run dev
 ```
