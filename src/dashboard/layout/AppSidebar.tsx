@@ -26,7 +26,7 @@ const navItems: NavItem[] = [
   {
     icon: <UserCircleIcon />,
     name: "Pengguna",
-    path: "/users",
+    path: "/dashboard/users",
   },
 ];
 

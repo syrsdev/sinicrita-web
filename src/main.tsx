@@ -16,6 +16,7 @@ import Dashboard from "./dashboard/pages/Dashboard/Dashboard.tsx";
 import AppLayout from "./dashboard/layout/AppLayout.tsx";
 import { ThemeProvider } from "./dashboard/context/ThemeContext.tsx";
 import AdminRoute from "./route/AdminRoute.tsx";
+import Users from "./dashboard/pages/Dashboard/Users.tsx";
 // import AdminRoute from "./route/AdminRoute.tsx";
 
 const router = createBrowserRouter([
@@ -47,7 +48,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
       },
-      // add other dashboard children here
+      {
+        path: "/dashboard/users",
+        element: <Users />,
+      },
     ],
   },
   {
