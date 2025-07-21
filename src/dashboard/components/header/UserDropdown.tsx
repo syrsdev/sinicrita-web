@@ -4,6 +4,8 @@ import { Dropdown } from "../ui/dropdown/Dropdown";
 import { Link } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { Logout } from "../../../services/auth.service";
+import { TbHomeFilled } from "react-icons/tb";
+import { AiOutlineHome } from "react-icons/ai";
 
 interface UserDropdownProps {
   user: {
@@ -72,7 +74,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
             <DropdownItem
               onItemClick={closeDropdown}
               tag="a"
-              to="/profile"
+              to="/dashboard/profile"
               className="flex items-center gap-3 px-3 py-2 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
             >
               <svg
@@ -94,6 +96,14 @@ export default function UserDropdown({ user }: UserDropdownProps) {
             </DropdownItem>
           </li>
         </ul>
+        <DropdownItem
+          onItemClick={closeDropdown}
+          tag="a"
+          to="/post"
+          className="flex items-center gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300 cursor-pointer"
+        >
+          <AiOutlineHome className="w-6 h-6 text-gray-500" /> Home
+        </DropdownItem>
         <span
           onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300 cursor-pointer"

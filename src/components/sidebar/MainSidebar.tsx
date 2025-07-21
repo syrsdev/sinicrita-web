@@ -4,9 +4,10 @@ import { MdEmail } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
 import { Logout } from "../../services/auth.service";
+import { RxDashboard } from "react-icons/rx";
 
 const MainSidebar = () => {
-  const { setUser } = useAuth();
+  const { user, setUser } = useAuth();
   const handleLogout = () => {
     Logout(() => setUser(null));
   };
@@ -19,9 +20,16 @@ const MainSidebar = () => {
           <SideLink href="/post" hover="hover:bg-primary hover:text-white">
             <TbHomeFilled className="text-[26px]" /> Home
           </SideLink>
-          <SideLink href="/chat" hover="hover:bg-primary hover:text-white">
-            <MdEmail className="text-[26px]" /> Direct Message
-          </SideLink>
+          {user?.role != "admin" && (
+            <SideLink href="/chat" hover="hover:bg-primary hover:text-white">
+              <MdEmail className="text-[26px]" /> Direct Message
+            </SideLink>
+          )}
+          {user?.role == "admin" && (
+            <SideLink href="/dashboard" hover="hover:bg-primary hover:text-white">
+              <RxDashboard className="text-[26px]" /> Dashboard
+            </SideLink>
+          )}
           <SideLink
             onclick={handleLogout}
             hover="hover:bg-red-500 hover:text-white"
