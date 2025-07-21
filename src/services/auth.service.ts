@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import api from "./axios.service.ts";
 import { alert } from "../hooks/useAlert.ts";
 
