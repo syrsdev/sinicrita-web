@@ -91,67 +91,68 @@ const DetailPost = () => {
 
   return (
     <MainLayout sidebar={<MainSidebar />} userLogin={user}>
-      <div className="p-10 bg-white w-full m-10 rounded-2xl flex flex-col gap-2">
-        <div className="flex flex-col gap-1 mb-4">
-          <h1 className="text-[22px] font-bold">
-            Dibuat oleh{" "}
-            <span className="text-primary">@{post?.user?.username}</span>
-          </h1>
-          <p>
-            Pada{" "}
-            {formatedDate.toLocaleDateString("id-ID", {
-              month: "long",
-              day: "numeric",
-              year: "numeric",
-            })}
-          </p>
-        </div>
-        {IsEdit == false && <p className="text-[16px]">{post?.content}</p>}
+      <div className="pb-[70px] pt-10 px-10 h-screen overflow-y-auto w-full">
+        <div className="p-10 bg-white w-full rounded-2xl flex flex-col gap-2">
+          <div className="flex flex-col gap-1 mb-4">
+            <h1 className="text-[22px] font-bold">
+              Dibuat oleh{" "}
+              <span className="text-primary">@{post?.user?.username}</span>
+            </h1>
+            <p>
+              Pada{" "}
+              {formatedDate.toLocaleDateString("id-ID", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </p>
+          </div>
+          {IsEdit == false && <p className="text-[16px]">{post?.content}</p>}
 
-        {user?.id == post?.user?.id && (
-          <form onSubmit={handleUpdate} method="post">
-            {IsEdit == true && (
-              <textarea
-                minLength={5}
-                name="content"
-                id="content"
-                className="bg-white w-full rounded-2xl border-slate-600 border-2 outline-primary p-4 min-h-80"
-                placeholder="Tulis cerita anda..."
-                onChange={(e) => setContent(e.target.value)}
-              >
-                {content}
-              </textarea>
-            )}
-
-            <div className="flex gap-8 justify-between mt-10">
-              <Button
-                onclick={() => handleEditButton()}
-                bg="bg-primary hover:bg-[#2DB7B4FF]"
-                classname="text-white"
-              >
-                {IsEdit == true ? "Batalkan" : "Edit"}
-              </Button>
-              {IsEdit == true ? (
-                <ButtonSecondary type="submit">Simpan</ButtonSecondary>
-              ) : (
-                <ButtonSecondary onclick={() => handleDelete()}>
-                  Hapus
-                </ButtonSecondary>
+          {user?.id == post?.user?.id && (
+            <form onSubmit={handleUpdate} method="post">
+              {IsEdit == true && (
+                <textarea
+                  minLength={5}
+                  name="content"
+                  id="content"
+                  className="bg-white w-full rounded-2xl border-slate-600 border-2 outline-primary p-4 min-h-80"
+                  placeholder="Tulis cerita anda..."
+                  onChange={(e) => setContent(e.target.value)}
+                  value={content}
+                ></textarea>
               )}
-            </div>
-          </form>
-        )}
 
-        {user?.role == "pendengar" && (
-          <Button
-            onclick={() => handleChatResponse()}
-            bg="bg-primary hover:bg-[#2DB7B4FF]"
-            classname="text-white  mt-20"
-            disable={buttonDisable}
-          >
-            Kirim Respon di Chat
-          </Button>
-        )}
+              <div className="flex gap-8 justify-between mt-10">
+                <Button
+                  onclick={() => handleEditButton()}
+                  bg="bg-primary hover:bg-[#2DB7B4FF]"
+                  classname="text-white"
+                >
+                  {IsEdit == true ? "Batalkan" : "Edit"}
+                </Button>
+                {IsEdit == true ? (
+                  <ButtonSecondary type="submit">Simpan</ButtonSecondary>
+                ) : (
+                  <ButtonSecondary onclick={() => handleDelete()}>
+                    Hapus
+                  </ButtonSecondary>
+                )}
+              </div>
+            </form>
+          )}
+
+          {user?.role == "pendengar" && (
+            <Button
+              onclick={() => handleChatResponse()}
+              bg="bg-primary hover:bg-[#2DB7B4FF]"
+              classname="text-white  mt-20"
+              disable={buttonDisable}
+            >
+              Kirim Respon di Chat
+            </Button>
+          )}
+        </div>
       </div>
     </MainLayout>
   );
