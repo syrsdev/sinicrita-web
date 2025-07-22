@@ -3,7 +3,7 @@ import Echo from "../../services/echo";
 import useAuth from "../../hooks/useAuth";
 import { getListChat } from "../../services/chat.service";
 import { IoMdArrowBack } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { formatTimestamp } from "../../hooks/useFormatTime";
 
 interface Session {
@@ -23,7 +23,8 @@ interface SidebarChatProps {
 const SidebarChat = ({ isActive, setIsActive }: SidebarChatProps) => {
   const [sessions, setSessions] = useState<Session[]>([]);
   const { user } = useAuth();
-
+  const { id } = useParams();
+  const navigate = useNavigate();
   const fetchSessions = async () => {
     if (user?.id) {
       getListChat(user.id, (res) => {
@@ -40,7 +41,10 @@ const SidebarChat = ({ isActive, setIsActive }: SidebarChatProps) => {
     const channelName = `user.${user?.id}`;
     const privateChannel = Echo.private(channelName);
 
-    privateChannel.listen(".SessionCreated", () => {
+    privateChannel.listen(".SessionCreated", (e: any) => {
+      if (e.session.id == id && e.session.post_id == null) {
+        navigate("/chat");
+      }
       fetchSessions();
     });
 

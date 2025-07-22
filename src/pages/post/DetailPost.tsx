@@ -14,6 +14,7 @@ import { alert } from "../../hooks/useAlert";
 import { createChat } from "../../services/chat.service";
 
 type Post = {
+  id: number;
   user: {
     id: number | undefined;
     username: string;
@@ -101,6 +102,7 @@ const DetailPost = () => {
     createChat({
       user1_id: user?.id,
       user2_id: post?.user?.id,
+      post_id: post?.id,
     });
     setbuttonDisable(true);
 

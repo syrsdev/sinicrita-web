@@ -56,7 +56,9 @@ export const getDetailChat = (
       callback(res);
     })
     .catch((err) => {
-      if (err.response.status != 401) {
+      if (err.response.status == 404) {
+        window.location.href = "/chat";
+      } else if (err.response.status != 401) {
         alert.fire({
           title: "Oops...",
           text: err.response.data.message,
