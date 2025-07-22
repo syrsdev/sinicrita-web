@@ -1,4 +1,4 @@
-import { useEffect, useRef} from "react";
+import { useEffect, useRef } from "react";
 import useAuth from "../../hooks/useAuth";
 import FieldChat from "./FieldChat";
 import dayjs from "dayjs";
