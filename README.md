@@ -5,7 +5,7 @@ Ini merupakan repository untuk frontend dari platform sinicrita, dibuat dan dike
 
 ## Tech Stack
 
-**Framework & Library:** React Typescript, Tailwindcss (react-router, axios, pusher-js, sweetalert2, react-tooltip, react-icons, dayjs)
+**Programming Language, Framework & Library:** HTML, CSS, JavaScript, Typescript, ReactJS, Tailwindcss (react-router, axios, pusher-js, sweetalert2, react-tooltip, react-icons, dayjs)
 
 ## Features
 
