@@ -26,7 +26,10 @@ const MainSidebar = () => {
             </SideLink>
           )}
           {user?.role == "admin" && (
-            <SideLink href="/dashboard" hover="hover:bg-primary hover:text-white">
+            <SideLink
+              href="/dashboard"
+              hover="hover:bg-primary hover:text-white"
+            >
               <RxDashboard className="text-[26px]" /> Dashboard
             </SideLink>
           )}
@@ -38,9 +41,9 @@ const MainSidebar = () => {
           </SideLink>
         </div>
       </div>
-      <span className="ml-5 mb-3 cursor-pointer hover:text-primary">
+      {/* <span className="ml-5 mb-3 cursor-pointer hover:text-primary">
         Meet Developer
-      </span>
+      </span> */}
     </div>
   );
 };
