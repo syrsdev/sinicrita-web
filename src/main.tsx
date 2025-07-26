@@ -17,11 +17,13 @@ import AppLayout from "./dashboard/layout/AppLayout.tsx";
 import { ThemeProvider } from "./dashboard/context/ThemeContext.tsx";
 import AdminRoute from "./route/AdminRoute.tsx";
 import Users from "./dashboard/pages/Dashboard/Users.tsx";
+import NotFound from "./pages/404.tsx";
 // import AdminRoute from "./route/AdminRoute.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <NotFound />,
     element: (
       <GuestRoute>
         <LoginPage />
