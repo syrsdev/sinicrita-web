@@ -142,14 +142,12 @@ const UserManagement: React.FC = () => {
                   setForm({ ...form, password_confirmation: e.target.value })
                 }
               />
-              <select
+              <input
                 className="w-full border px-3 py-2 rounded"
                 value={form.role}
+                readOnly
                 onChange={(e) => setForm({ ...form, role: e.target.value })}
-              >
-                <option value="pendengar">Pendengar</option>
-                <option value="pencerita">Pencerita</option>
-              </select>
+              ></input>
             </div>
 
             <div className="mt-6 flex justify-end space-x-2">
