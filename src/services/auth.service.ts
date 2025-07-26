@@ -76,10 +76,14 @@ export const Logout = (callback: () => void) => {
       callback();
     })
     .catch((err) => {
-      alert.fire({
-        title: "Oops...",
-        text: err.response?.data?.message || "Something went wrong",
-        icon: "error",
-      });
+      if (err.response.status != 401) {
+        alert.fire({
+          title: "Oops...",
+          text: err.response.data.message,
+          icon: "error",
+        });
+      } else {
+        window.location.href = "/";
+      }
     });
 };
