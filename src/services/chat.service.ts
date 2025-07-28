@@ -76,11 +76,16 @@ export const sendMessage = (data: object) => {
     .then(() => {})
     .catch((err) => {
       if (err.response.status != 401) {
-        alert.fire({
-          title: "Oops...",
-          text: err.response.data.message,
-          icon: "error",
-        });
+        console.log(err.response.data);
+        if (err.response.data.message == "validation.exists") {
+          window.location.href = "/chat";
+        } else {
+          alert.fire({
+            title: "Oops...",
+            text: err.response.data.message,
+            icon: "error",
+          });
+        }
       } else {
         window.location.href = "/";
       }
