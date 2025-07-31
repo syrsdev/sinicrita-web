@@ -8,7 +8,7 @@ const PostCard = ({ content, username, time, userLogin, slug }: any) => {
   return (
     <div className="flex w-full p-7 justify-between gap-10 border-b-2 border-border">
       <Tooltip anchorSelect=".tooltip" place="top" className="z-50">
-        Lihat detail {userLogin.role == "pendengar" && "dan tanggapi"}
+        Lihat detail {userLogin?.role == "pendengar" && "dan tanggapi"}
       </Tooltip>
       <div className="flex gap-5">
         <div className="flex flex-col w-full">

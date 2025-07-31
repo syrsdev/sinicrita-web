@@ -19,7 +19,25 @@ export const getPost = (
           icon: "error",
         });
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
+      }
+    });
+};
+export const getGuestPost = (callback: (res: AxiosResponse) => void) => {
+  api
+    .get(`/post/guest`)
+    .then((res) => {
+      callback(res);
+    })
+    .catch((err) => {
+      if (err.response.status != 401) {
+        alert.fire({
+          title: "Oops...",
+          text: err.response.data.message,
+          icon: "error",
+        });
+      } else {
+        window.location.href = "/login";
       }
     });
 };
@@ -41,7 +59,7 @@ export const detailPost = (
           icon: "error",
         });
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     });
 };
@@ -60,7 +78,7 @@ export const createPost = (data: object) => {
           icon: "error",
         });
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     });
 };
@@ -79,7 +97,7 @@ export const updatePost = (data: object, slug: String) => {
           icon: "error",
         });
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     });
 };
@@ -97,7 +115,7 @@ export const updateStatus = (data: object, slug: String) => {
           icon: "error",
         });
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     });
 };
@@ -116,7 +134,7 @@ export const deletePost = (slug: String) => {
           icon: "error",
         });
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     });
 };

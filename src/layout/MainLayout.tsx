@@ -11,8 +11,6 @@ const MainLayout = ({
 }: any) => {
   useAlert();
 
-  if (userLogin == null) return (window.location.href = "/");
-
   return (
     <>
       <div className="flex h-[100dvh]">
@@ -22,7 +20,7 @@ const MainLayout = ({
           <div className="w-full bg-primary h-[70px] text-[20px] text-white flex justify-center font-bold items-center sticky top-0 z-50">
             <h2>
               {title == null
-                ? userLogin.role == "pendengar"
+                ? userLogin?.role == "pendengar"
                   ? "Ayo Bantu Mendengarkan"
                   : "Jangan Ragu Bercerita"
                 : title}
@@ -32,7 +30,7 @@ const MainLayout = ({
         </div>
       </div>
 
-      {userLogin.role == "pencerita" && (
+      {(userLogin?.role == "pencerita" || userLogin == null) && (
         <FloatingButton hiddenAddButton={hiddenAddButton} />
       )}
     </>
