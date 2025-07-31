@@ -12,17 +12,10 @@ export const getCsrfToken = async (): Promise<void> => {
   }
 };
 export const getUser = async () => {
-  try {
-    const data = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/v1/user`,
-      {
-        withCredentials: true,
-      }
-    );
-    return data.data;
-  } catch (error) {
-    console.error(error);
-  }
+  const data = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/user`, {
+    withCredentials: true,
+  });
+  return data.data;
 };
 
 export const Login = (data: { username: string; password: string }) => {
@@ -58,7 +51,7 @@ export const Register = (data: {
       withCredentials: true,
     })
     .then(() => {
-      window.location.href = "/";
+      window.location.href = "/login";
     })
     .catch((err) => {
       alert.fire({
@@ -83,7 +76,7 @@ export const Logout = (callback: () => void) => {
           icon: "error",
         });
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     });
 };

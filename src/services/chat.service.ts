@@ -20,7 +20,7 @@ export const createChat = (data: object) => {
           });
         }
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     });
 };
@@ -41,7 +41,7 @@ export const getListChat = (
           icon: "error",
         });
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     });
 };
@@ -65,7 +65,7 @@ export const getDetailChat = (
           icon: "error",
         });
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     });
 };
@@ -87,7 +87,7 @@ export const sendMessage = (data: object) => {
           });
         }
       } else {
-        window.location.href = "/";
+        window.location.href = "/login";
       }
     });
 };
