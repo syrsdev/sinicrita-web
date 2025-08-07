@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 
 const AuthLayout = ({ children, onsubmit }: any) => {
   return (
@@ -7,6 +8,7 @@ const AuthLayout = ({ children, onsubmit }: any) => {
         <img src="./assets/logo-sinicrita.svg" alt="sinicrita" />
       </Link>
       <div className="w-full flex justify-center">
+        <Tooltip id="showhidepw" className="z-50" />
         <form
           onSubmit={onsubmit}
           className="flex bg-primary p-7 md:p-10 rounded-2xl gap-7 w-10/12 md:w-1/2 lg:w-1/3 flex-col"
