@@ -54,15 +54,15 @@ const SidebarChat = ({ isActive, setIsActive }: SidebarChatProps) => {
   }, [user?.id]);
 
   return (
-    <div>
-      <h1 className="font-bold text-center mt-6 text-[24px] flex items-center justify-between gap-2 mx-6">
+    <div className="h-full">
+      <h1 className="font-bold text-center my-6 text-[24px] flex items-center justify-between gap-2 mx-6">
         <Link to={"/post"}>
           <IoMdArrowBack className="cursor-pointer" />
         </Link>
         Direct Message
         <IoMdArrowBack style={{ visibility: "hidden" }} />
       </h1>
-      <div className="flex flex-col mt-14 text-[16px] gap-3">
+      <div className="flex flex-col mt-10 pb-32 text-[16px] gap-3 overflow-y-auto h-screen">
         {sessions.length === 0 && (
           <p className="text-gray-500 text-center">Belum ada pesan.</p>
         )}
