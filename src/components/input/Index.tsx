@@ -7,6 +7,7 @@ const Input = ({
   autoFocus = false,
   placeholder,
   onchange,
+  onkeydown,
 }: any) => {
   return (
     <div className="w-full flex flex-col gap-2">
@@ -17,6 +18,7 @@ const Input = ({
         autoFocus={autoFocus}
         placeholder={placeholder}
         onchange={onchange}
+        onkeydown={onkeydown}
       />
     </div>
   );

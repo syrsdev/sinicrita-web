@@ -23,6 +23,12 @@ const LoginPage = () => {
       setbuttonDisable(false);
     }, 1000);
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === " " || e.key === "Tab") {
+      e.preventDefault();
+    }
+  };
   return (
     <AuthLayout onsubmit={handleLogin}>
       <h1 className="font-bold text-[23px] md:text-[28px] xl:text-[40px] text-center">
@@ -33,12 +39,14 @@ const LoginPage = () => {
         autoFocus={true}
         placeholder="Masukan username anda"
         onchange={(e: any) => setUsername(e.target.value)}
+        onkeydown={handleKeyDown}
       ></Input>
       <Input
         label="Password"
         type="password"
         placeholder="Password min 8 karakter"
         onchange={(e: any) => setPassword(e.target.value)}
+        onkeydown={handleKeyDown}
       ></Input>
 
       <Button type="submit" classname="mt-4" disable={buttonDisable}>
