@@ -17,6 +17,10 @@ const FieldChat = ({ session_id, sender_id, setIsSent }: SendMessageProps) => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      textareaRef.current.style.overflowY =
+        textareaRef.current.scrollHeight > textareaRef.current.offsetHeight
+          ? "auto"
+          : "hidden";
     }
   }, [value]);
 
@@ -35,7 +39,7 @@ const FieldChat = ({ session_id, sender_id, setIsSent }: SendMessageProps) => {
   };
   return (
     <form
-      className="flex justify-between items-center gap-3 bg-primary p-3 w-full"
+      className="flex justify-between items-end gap-3 bg-primary p-3 w-full"
       method="post"
       onSubmit={handleSendMessage}
     >
@@ -47,7 +51,7 @@ const FieldChat = ({ session_id, sender_id, setIsSent }: SendMessageProps) => {
         placeholder="Tulis sesuatu..."
         autoFocus
         required
-        className="w-full resize-none overflow-hidden rounded border bg-white border-gray-300 px-4 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+        className="w-full resize-none overflow-hidden rounded border bg-white border-gray-300 px-4 py-2 focus:outline-none focus:ring focus:ring-blue-300 overflow-y-hidden max-h-48"
       />
       <div className="w-[10%] text-white ">
         <Button
