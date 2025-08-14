@@ -79,6 +79,7 @@ const Chat = () => {
           ? targetChat?.user2?.username
           : targetChat?.user1?.username
       }
+      isCanCall={isActive != "chat"}
       sidebar={<SidebarChat isActive={isActive} setIsActive={setIsActive} />}
       userLogin={user}
       hiddenAddButton={true}
