@@ -17,6 +17,7 @@ interface ChatProps {
   session_id: number | undefined;
   isSent: boolean;
   setIsSent: React.Dispatch<React.SetStateAction<boolean>>;
+  isCallActive: boolean;
 }
 
 declare global {
@@ -25,7 +26,13 @@ declare global {
   }
 }
 
-const DetailChat = ({ chat, session_id, isSent, setIsSent }: ChatProps) => {
+const DetailChat = ({
+  chat,
+  session_id,
+  isSent,
+  setIsSent,
+  isCallActive,
+}: ChatProps) => {
   const { user } = useAuth();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -52,7 +59,11 @@ const DetailChat = ({ chat, session_id, isSent, setIsSent }: ChatProps) => {
   );
 
   return (
-    <div className="flex flex-col w-full justify-between pb-[70px] h-screen">
+    <div
+      className={`flex flex-col w-full justify-between h-screen ${
+        isCallActive ? "pb-[230px]" : "pb-[70px]"
+      }`}
+    >
       <div className="w-full py-5 px-12 overflow-y-auto">
         <div className="flex flex-col gap-4">
           {Object.entries(groupedChat).map(([date, messages]) => (

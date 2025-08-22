@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import DetailChat from "./DetailChat";
 import { getDetailChat } from "../../services/chat.service";
 import Echo from "../../services/echo";
+import CallLayout from "./call/CallLayout";
 
 interface Session {
   id: number;
@@ -32,6 +33,7 @@ const Chat = () => {
   const [targetChat, setTargetChat] = useState<Session>({} as Session);
   const [chat, setChat] = useState<Chat[]>([]);
   const [isSent, setIsSent] = useState(true);
+  const [isCallActive, setIsCallActive] = useState(false);
 
   const { id } = useParams();
 
@@ -83,36 +85,50 @@ const Chat = () => {
       sidebar={<SidebarChat isActive={isActive} setIsActive={setIsActive} />}
       userLogin={user}
       hiddenAddButton={true}
+      isCallActive={isCallActive}
+      setIsCallActive={setIsCallActive}
     >
-      {isActive == "chat" ? (
-        <div className="flex items-center justify-center w-full h-screen flex-col">
-          <img src="./assets/chat.svg" alt="direct message" className="w-1/5" />
-          <div>
-            {user?.role == "pendengar" ? (
-              <p>
-                mulai mendengarkan cerita atau{" "}
-                <Link to="/post" className="text-primary">
-                  lihat postingan lainnya
-                </Link>
-              </p>
-            ) : (
-              <p>
-                mulai bercerita atau{" "}
-                <Link to="/post/add" className="text-primary">
-                  buat postingan
-                </Link>
-              </p>
-            )}
+      <div className="flex flex-col w-full h-max">
+        {isCallActive && <CallLayout />}
+        {isActive == "chat" ? (
+          <div
+            className={`flex items-center justify-center w-full h-screen flex-col ${
+              isCallActive ? "pb-[230px]" : "pb-[70px]"
+            }`}
+          >
+            <img
+              src="./assets/chat.svg"
+              alt="direct message"
+              className="w-1/5"
+            />
+            <div>
+              {user?.role == "pendengar" ? (
+                <p>
+                  mulai mendengarkan cerita atau{" "}
+                  <Link to="/post" className="text-primary">
+                    lihat postingan lainnya
+                  </Link>
+                </p>
+              ) : (
+                <p>
+                  mulai bercerita atau{" "}
+                  <Link to="/post/add" className="text-primary">
+                    buat postingan
+                  </Link>
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-      ) : (
-        <DetailChat
-          chat={chat}
-          session_id={targetChat.id}
-          setIsSent={setIsSent}
-          isSent={isSent}
-        ></DetailChat>
-      )}
+        ) : (
+          <DetailChat
+            isCallActive={isCallActive}
+            chat={chat}
+            session_id={targetChat.id}
+            setIsSent={setIsSent}
+            isSent={isSent}
+          ></DetailChat>
+        )}
+      </div>
     </MainLayout>
   );
 };

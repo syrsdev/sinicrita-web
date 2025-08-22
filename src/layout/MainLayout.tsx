@@ -10,6 +10,8 @@ const MainLayout = ({
   userLogin,
   title,
   isCanCall = false,
+  isCallActive,
+  setIsCallActive,
 }: any) => {
   useAlert();
 
@@ -31,7 +33,12 @@ const MainLayout = ({
                   : "Jangan Ragu Bercerita"
                 : title}
             </h2>
-            {isCanCall && <FaPhoneAlt className="cursor-pointer" />}
+            {isCanCall && (
+              <FaPhoneAlt
+                className="cursor-pointer"
+                onClick={() => setIsCallActive(true)}
+              />
+            )}
           </div>
           <div className="flex absolute w-full">{children}</div>
         </div>
