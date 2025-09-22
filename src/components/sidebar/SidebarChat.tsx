@@ -54,7 +54,7 @@ const SidebarChat = ({ isActive, setIsActive }: SidebarChatProps) => {
   }, [user?.id]);
 
   return (
-    <div className="h-full">
+    <div className="h-full w-full ">
       <h1 className="font-bold text-center my-6 text-[24px] flex items-center justify-between gap-2 mx-6">
         <Link to={"/post"}>
           <IoMdArrowBack className="cursor-pointer" />
