@@ -6,7 +6,10 @@ const PostCard = ({ content, username, time, userLogin, slug }: any) => {
   const formatedDate = new Date(time);
 
   return (
-    <div className="flex w-full p-7 justify-between gap-10 border-b-2 border-border">
+    <Link
+      to={`/post/detail/${slug}`}
+      className="flex w-full p-7 justify-between gap-10 border-b-2 border-border"
+    >
       <Tooltip anchorSelect=".tooltip" place="top" className="z-50">
         Lihat detail {userLogin?.role == "pendengar" && "dan tanggapi"}
       </Tooltip>
@@ -26,11 +29,11 @@ const PostCard = ({ content, username, time, userLogin, slug }: any) => {
             year: "numeric",
           })}
         </p>
-        <Link to={`/post/detail/${slug}`} className="tooltip">
+        <div className="tooltip">
           <FaComments className="text-2xl hover:text-primary" />
-        </Link>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
