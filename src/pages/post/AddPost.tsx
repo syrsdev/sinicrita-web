@@ -4,6 +4,7 @@ import MainSidebar from "../../components/sidebar/MainSidebar";
 import MainLayout from "../../layout/MainLayout";
 import { createPost } from "../../services/post.service";
 import useAuth from "../../hooks/useAuth";
+import BackButton from "../../components/button/BackButton";
 
 const AddPost = () => {
   const [content, setContent] = useState("");
@@ -36,14 +37,17 @@ const AddPost = () => {
           onSubmit={handleSubmit}
           className="w-full flex flex-col p-8 gap-10"
         >
-          <textarea
-            autoFocus
-            name="content"
-            id="content"
-            className="bg-white w-full rounded-2xl focus:outline-primary p-4 min-h-60"
-            placeholder="Tulis cerita anda..."
-            onChange={(e) => setContent(e.target.value)}
-          ></textarea>
+          <div className="flex gap-3 flex-col">
+            <BackButton />
+            <textarea
+              autoFocus
+              name="content"
+              id="content"
+              className="bg-white w-full rounded-2xl focus:outline-primary p-4 min-h-60"
+              placeholder="Tulis cerita anda..."
+              onChange={(e) => setContent(e.target.value)}
+            ></textarea>
+          </div>
 
           <Button
             disable={buttonDisable}

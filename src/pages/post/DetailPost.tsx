@@ -12,6 +12,7 @@ import Button from "../../components/button/Button";
 import ButtonSecondary from "../../components/button/ButtonSecondary";
 import { alert } from "../../hooks/useAlert";
 import { createChat } from "../../services/chat.service";
+import BackButton from "../../components/button/BackButton";
 
 type Post = {
   id: number;
@@ -114,9 +115,11 @@ const DetailPost = () => {
   return (
     <MainLayout sidebar={<MainSidebar />} userLogin={user}>
       <div className="pb-[70px] pt-10 px-10 h-screen overflow-y-auto w-full">
-        <div className="p-10 bg-white w-full rounded-2xl flex flex-col gap-2">
+        <BackButton />
+
+        <div className="p-5 md:p-10 bg-white w-full rounded-2xl flex flex-col gap-2 mt-4">
           <div className="flex flex-col gap-1 mb-4">
-            <div className="ms-auto">
+            <div className="md:ms-auto text-sm">
               {post?.status != "selesai" ? (
                 user?.id == post?.user?.id && (
                   <ButtonSecondary onclick={handleStatus}>
@@ -129,7 +132,7 @@ const DetailPost = () => {
                 </ButtonSecondary>
               )}
             </div>
-            <h1 className="text-[22px] font-bold">
+            <h1 className="text-lg md:text-[22px] font-bold mt-5 md:mt-0">
               Dibuat oleh{" "}
               <span className="text-primary">@{post?.user?.username}</span>
             </h1>
@@ -158,7 +161,7 @@ const DetailPost = () => {
                 ></textarea>
               )}
 
-              <div className="flex gap-8 justify-between mt-10">
+              <div className="flex gap-3 md:gap-8 justify-between mt-10 text-sm">
                 <Button
                   onclick={() => handleEditButton()}
                   bg="bg-primary hover:bg-[#2DB7B4FF]"
