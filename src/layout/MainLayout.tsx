@@ -10,8 +10,7 @@ const MainLayout = ({
   userLogin,
   title,
   isCanCall = false,
-  isCallActive,
-  setIsCallActive,
+  handleCallActive,
 }: any) => {
   useAlert();
 
@@ -36,7 +35,7 @@ const MainLayout = ({
             {isCanCall && (
               <FaPhoneAlt
                 className="cursor-pointer"
-                onClick={() => setIsCallActive(true)}
+                onClick={handleCallActive}
               />
             )}
           </div>
