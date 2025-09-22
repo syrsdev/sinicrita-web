@@ -14,7 +14,7 @@ const Button = ({
       type={type}
       disabled={disable}
       onClick={onclick}
-      className={`w-full gap-2 flex justify-center items-center ${bg} py-2 px-3 ${rounded} ${
+      className={`w-full gap-2 flex justify-center items-center ${bg} py-2 px-3 text-sm ${rounded} ${
         disable ? "cursor-not-allowed" : "cursor-pointer"
       } ${classname}`}
     >
