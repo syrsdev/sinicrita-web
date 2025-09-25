@@ -339,7 +339,6 @@ const Chat = () => {
       }
     });
 
-
     privateChannel.listen(".CallEnded", () => {
       console.log("🛑 Panggilan dibatalkan");
       setIsCallActive(false);
@@ -414,7 +413,7 @@ const Chat = () => {
             <img
               src="./assets/chat.svg"
               alt="direct message"
-              className="w-1/5"
+              className="w-1/2 lg:w-1/5"
             />
             <div>
               {user?.role === "pendengar" ? (
