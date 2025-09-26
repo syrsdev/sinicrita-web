@@ -15,7 +15,7 @@ const MainSidebar = () => {
   return (
     <div className="flex flex-col justify-between h-screen w-full">
       <div>
-        <h1 className="font-bold text-center mt-5 text-[32px]">sinicrita</h1>
+        <h1 className="font-bold text-center mt-5 text-[32px]">Sinicrita</h1>
         <div className="flex flex-col mt-14 text-[20px] gap-8">
           <SideLink
             href={user == null ? "/" : "/post"}
