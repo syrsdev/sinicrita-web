@@ -3,6 +3,8 @@ import FloatingButton from "../components/button/FloatingButton";
 import { useAlert } from "../hooks/useAlert";
 import Sidebar from "./Sidebar";
 import SidebarButton from "../components/button/SidebarButton";
+import SidebarMobile from "./SidebarMobile";
+import { useState } from "react";
 
 const MainLayout = ({
   sidebar,
@@ -14,6 +16,7 @@ const MainLayout = ({
   handleCallActive,
 }: any) => {
   useAlert();
+  const [isSidabarActive, setIsSidebarActive] = useState(false);
 
   return (
     <>
@@ -41,7 +44,18 @@ const MainLayout = ({
                 onClick={handleCallActive}
               />
             )}
-            {!isCanCall && <SidebarButton />}
+            {!isCanCall && (
+              <>
+                <SidebarMobile
+                  isActive={isSidabarActive}
+                  onclick={() => setIsSidebarActive(false)}
+                />
+                <SidebarButton
+                  onclick={() => setIsSidebarActive(!isSidabarActive)}
+                  checked={isSidabarActive}
+                />
+              </>
+            )}
           </div>
           <div className="flex absolute w-full">{children}</div>
         </div>
