@@ -387,6 +387,7 @@ const Chat = () => {
       userLogin={user}
       hiddenAddButton={true}
       handleCallActive={handleCallActive}
+      isChat={isActive == "chat" ? true : false}
     >
       <div className="flex flex-col w-full h-max">
         {/* ✅ Render CallLayout hanya jika isCallActive dan callProps ada */}
