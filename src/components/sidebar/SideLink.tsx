@@ -9,7 +9,7 @@ const SideLink = ({ children, href, onclick = () => {}, hover }: any) => {
       to={href == null ? active : href}
       className={`flex items-center gap-3 ${hover} ${
         active === href ? "bg-primary text-white" : "bg-white"
-      }  rounded-e-full py-4 px-5 w-4/5 cursor-pointer`}
+      }  rounded-e-full py-4 px-5 w-4/5 cursor-pointer text-sm lg:text-xl`}
     >
       {children}
     </NavLink>
