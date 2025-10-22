@@ -5,6 +5,7 @@ import { FiLogIn, FiLogOut } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
 import { Logout } from "../../services/auth.service";
 import { RxDashboard } from "react-icons/rx";
+import { FaUserPen } from "react-icons/fa6";
 
 const MainSidebar = () => {
   const { user, setUser } = useAuth();
@@ -21,24 +22,32 @@ const MainSidebar = () => {
             href={user == null ? "/" : "/post"}
             hover="hover:bg-primary hover:text-white"
           >
-            <TbHomeFilled className="text-[26px]" /> Home
+            <TbHomeFilled className="text-[24px]" /> Home
           </SideLink>
           {user?.role != "admin" && user != null && (
-            <SideLink href="/chat" hover="hover:bg-primary hover:text-white">
-              <MdEmail className="text-[26px]" /> Direct Message
-            </SideLink>
+            <>
+              <SideLink href="/chat" hover="hover:bg-primary hover:text-white">
+                <MdEmail className="text-[24px]" /> Direct Message
+              </SideLink>
+              <SideLink
+                href="/profile"
+                hover="hover:bg-primary hover:text-white"
+              >
+                <FaUserPen className="text-[24px]" /> Profile
+              </SideLink>
+            </>
           )}
           {user?.role == "admin" && (
             <SideLink
               href="/dashboard"
               hover="hover:bg-primary hover:text-white"
             >
-              <RxDashboard className="text-[26px]" /> Dashboard
+              <RxDashboard className="text-[24px]" /> Dashboard
             </SideLink>
           )}
           {user == null && (
             <SideLink href="/login" hover="hover:bg-primary hover:text-white">
-              <FiLogIn className="text-[26px]" /> Login
+              <FiLogIn className="text-[24px]" /> Login
             </SideLink>
           )}
           {user != null && (
@@ -46,7 +55,7 @@ const MainSidebar = () => {
               onclick={handleLogout}
               hover="hover:bg-red-500 hover:text-white"
             >
-              <FiLogOut className="text-[26px]" /> Logout
+              <FiLogOut className="text-[24px]" /> Logout
             </SideLink>
           )}
         </div>
