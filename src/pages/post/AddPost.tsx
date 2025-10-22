@@ -32,7 +32,7 @@ const AddPost = () => {
       hiddenAddButton={true}
       userLogin={user}
     >
-      <div className="w-full overflow-y-auto h-screen pb-[70px]">
+      <div className="w-full overflow-y-auto h-screen pb-[170px] lg:pb-[70px]">
         <form
           onSubmit={handleSubmit}
           className="w-full flex flex-col p-8 gap-10"

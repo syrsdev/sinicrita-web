@@ -114,9 +114,8 @@ const DetailPost = () => {
 
   return (
     <MainLayout sidebar={<MainSidebar />} userLogin={user}>
-      <div className="pb-[70px] pt-10 px-10 h-screen overflow-y-auto w-full">
+      <div className="pb-[170px] lg:pb-[70px] pt-10 px-10 h-screen overflow-y-auto w-full">
         <BackButton />
-
         <div className="p-5 md:p-10 bg-white w-full rounded-2xl flex flex-col gap-2 mt-4">
           <div className="flex flex-col gap-1 mb-4">
             <div className="md:ms-auto text-sm">
