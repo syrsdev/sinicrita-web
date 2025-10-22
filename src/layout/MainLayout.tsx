@@ -2,11 +2,12 @@ import { FaPhoneAlt } from "react-icons/fa";
 import FloatingButton from "../components/button/FloatingButton";
 import { useAlert } from "../hooks/useAlert";
 import Sidebar from "./Sidebar";
-import SidebarButton from "../components/button/SidebarButton";
-import SidebarMobile from "./SidebarMobile";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMdArrowBack } from "react-icons/io";
+import BottomSidebar from "./BottomSidebar";
+import { FiLogOut } from "react-icons/fi";
+import { Logout } from "../services/auth.service";
+import useAuth from "../hooks/useAuth";
 
 const MainLayout = ({
   sidebar,
@@ -18,8 +19,13 @@ const MainLayout = ({
   handleCallActive,
   isChat,
 }: any) => {
+  // const [isSidabarActive, setIsSidebarActive] = useState(false);
+  const { setUser } = useAuth();
   useAlert();
-  const [isSidabarActive, setIsSidebarActive] = useState(false);
+
+  const handleLogout = () => {
+    Logout(() => setUser(null));
+  };
 
   return (
     <>
@@ -58,23 +64,30 @@ const MainLayout = ({
                 onClick={handleCallActive}
               />
             )}
-            {!isCanCall && !isChat && (
+            {window.location.pathname !== "/" && !isCanCall && !isChat && (
               <>
-                <SidebarMobile
+                <button
+                  onClick={handleLogout}
+                  className="flex gap-2 items-center cursor-pointer hover:text-red-500 lg:hidden"
+                >
+                  <FiLogOut className="text-[18px]" />{" "}
+                  <span className="text-[14px]">Logout</span>
+                </button>
+                {/* <SidebarMobile
                   isActive={isSidabarActive}
                   onclick={() => setIsSidebarActive(false)}
                 />
                 <SidebarButton
                   onclick={() => setIsSidebarActive(!isSidabarActive)}
                   checked={isSidabarActive}
-                />
+                /> */}
               </>
             )}
           </div>
           <div className="flex absolute w-full">{children}</div>
         </div>
       </div>
-
+      {!isCanCall && !isChat && <BottomSidebar user={userLogin} />}
       {(userLogin?.role == "pencerita" || userLogin == null) && (
         <FloatingButton hiddenAddButton={hiddenAddButton} />
       )}
