@@ -18,6 +18,7 @@ import { ThemeProvider } from "./dashboard/context/ThemeContext.tsx";
 import AdminRoute from "./route/AdminRoute.tsx";
 import Users from "./dashboard/pages/Dashboard/Users.tsx";
 import NotFound from "./pages/404.tsx";
+import Profile from "./pages/profile/Profile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Post />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <ProtectedRoute>
+        <Profile />
       </ProtectedRoute>
     ),
   },
