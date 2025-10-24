@@ -8,6 +8,7 @@ const Input = ({
   placeholder,
   onchange,
   onkeydown,
+  bgColor,
 }: any) => {
   return (
     <div className="w-full flex flex-col gap-2">
@@ -19,6 +20,7 @@ const Input = ({
         placeholder={placeholder}
         onchange={onchange}
         onkeydown={onkeydown}
+        bgColor={bgColor}
       />
     </div>
   );

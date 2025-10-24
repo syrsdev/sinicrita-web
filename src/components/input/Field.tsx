@@ -10,6 +10,7 @@ const Field = ({
   checked,
   onchange,
   onkeydown,
+  bgColor = "bg-white",
 }: any) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -19,7 +20,7 @@ const Field = ({
 
   if (type === "password") {
     return (
-      <div className="w-full flex bg-white rounded-lg items-center">
+      <div className={`w-full flex ${bgColor} rounded-lg items-center`}>
         <input
           type={showPassword ? "text" : "password"}
           id={id}
@@ -59,7 +60,7 @@ const Field = ({
       defaultChecked={checked}
       onChange={onchange}
       onKeyDown={onkeydown}
-      className="bg-white rounded-lg text-slate-500 py-2 px-3 focus:outline-none focus:shadow-outline"
+      className={`${bgColor} rounded-lg text-slate-500 py-2 px-3 focus:outline-none focus:shadow-outline`}
     />
   );
 };
