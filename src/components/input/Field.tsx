@@ -30,7 +30,7 @@ const Field = ({
           defaultChecked={checked}
           onChange={onchange}
           onKeyDown={onkeydown}
-          className="bg-white rounded-lg text-slate-500 py-2 px-3 focus:outline-none focus:shadow-outline w-full"
+          className={`${bgColor} rounded-lg text-slate-500 py-2 px-3 focus:outline-none focus:shadow-outline w-full`}
         />
         <button
           type="button"
