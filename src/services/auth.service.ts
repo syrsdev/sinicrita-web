@@ -80,3 +80,29 @@ export const Logout = (callback: () => void) => {
       }
     });
 };
+
+export const ChangePassword = (data: {
+  old_password: string;
+  new_password: string;
+  new_password_confirmation: string;
+}) => {
+  api
+    .post("/change-password", data)
+    .then(() => {
+      alert.fire({
+        title: "Success",
+        text: "Password berhasil diubah",
+        icon: "success",
+      });
+      setTimeout(() => {
+        window.location.href = "/post";
+      }, 1000);
+    })
+    .catch((err) => {
+      alert.fire({
+        title: "Oops...",
+        text: err.response.data.message,
+        icon: "error",
+      });
+    });
+};
