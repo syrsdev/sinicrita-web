@@ -58,7 +58,7 @@ const MainLayout = ({
                   : title}
               </h2>
             </div>
-            {isCanCall && (
+            {isCanCall && userLogin?.role == "pendengar" && (
               <FaPhoneAlt
                 className="cursor-pointer"
                 onClick={handleCallActive}
