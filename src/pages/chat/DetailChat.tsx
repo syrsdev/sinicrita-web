@@ -80,7 +80,7 @@ const DetailChat = ({
                   className={`flex flex-col gap-2 w-full mb-2`}
                 >
                   <p
-                    className={`px-5 py-3 rounded-xl w-max text-wrap max-w-3/5 ${
+                    className={`px-5 py-3 rounded-xl text-wrap max-w-3/5 break-words ${
                       item.sender_id === user?.id
                         ? "ms-auto bg-primary text-white"
                         : "me-auto bg-white"
