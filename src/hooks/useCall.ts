@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import api from "../services/axios.service";
 import Echo from "../services/echo";
+import { useWebRtcSignaling } from "./useWebrtcSignaling";
 
 type CallStatus = "idle" | "ringing" | "connected" | "ended";
 
@@ -13,47 +14,22 @@ export interface UseCallResult {
   rejectCall: () => void;
   endCall: () => void;
   error: string | null;
-  handleIncomingOffer: (offer: any) => void; // ✅ Method to handle offer from Chat.tsx
 }
-
-// ✅ SDP minimal dengan ICE credentials yang valid
-const createMinimalOfferSdp = (): string => {
-  // Generate valid ICE credentials (22+ characters)
-  const iceUfrag = "abcdefghij1234567890xyz"; // 23 characters
-  const icePwd = "defghijklmnopqrstuvwxyz1234567890abcdef"; // 38 characters
-
-  return (
-    [
-      "v=0",
-      "o=- 1234567890 1234567890 IN IP4 127.0.0.1",
-      "s=-",
-      "t=0 0",
-      "m=audio 9 UDP/TLS/RTP/SAVPF 111",
-      "c=IN IP4 127.0.0.1",
-      "a=rtcp:9 IN IP4 127.0.0.1",
-      "a=sendrecv",
-      "a=mid:0",
-      "a=rtcp-mux",
-      "a=rtpmap:111 opus/48000/2",
-      "a=fmtp:111 minptime=10;useinbandfec=1",
-      "a=setup:actpass",
-      `a=ice-ufrag:${iceUfrag}`,
-      `a=ice-pwd:${icePwd}`,
-      "a=fingerprint:sha-256 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00",
-    ].join("\r\n") + "\r\n"
-  );
-};
 
 export const useCall = ({
   peerId,
   sessionId,
   onCallEnded,
+  onCallReceived,
   enabled = true,
+  userId, // Tambahkan userId untuk WebSocket
 }: {
   peerId: number | null;
   sessionId: number | null;
   onCallEnded: () => void;
+  onCallReceived: () => void;
   enabled?: boolean;
+  userId: number; // Diperlukan untuk WebSocket
 }): UseCallResult => {
   const [status, setStatus] = useState<CallStatus>("idle");
   const [error, setError] = useState<string | null>(null);
@@ -62,6 +38,42 @@ export const useCall = ({
 
   const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
   const hasInitialized = useRef(false);
+
+  // Gunakan WebSocket untuk signaling WebRTC (offer/answer/candidate)
+  const { sendOffer, sendAnswer, sendCandidate } = useWebRtcSignaling(userId, {
+    onOffer: (data) => {
+      if (peerConnectionRef.current && data.offer) {
+        peerConnectionRef.current
+          .setRemoteDescription(data.offer)
+          .then(() => {
+            setStatus("ringing");
+            onCallReceived();
+          })
+          .catch((err) => {
+            console.error("❌ Gagal setRemoteDescription (offer):", err);
+            endCall();
+          });
+      }
+    },
+    onAnswer: (data) => {
+      if (peerConnectionRef.current && data.answer) {
+        peerConnectionRef.current
+          .setRemoteDescription(data.answer)
+          .then(() => setStatus("connected"))
+          .catch((err) => {
+            console.error("❌ Gagal setRemoteDescription (answer):", err);
+            endCall();
+          });
+      }
+    },
+    onCandidate: (data) => {
+      if (peerConnectionRef.current && data.candidate) {
+        peerConnectionRef.current
+          .addIceCandidate(data.candidate)
+          .catch(console.error);
+      }
+    },
+  });
 
   // Reset saat disabled
   useEffect(() => {
@@ -82,9 +94,7 @@ export const useCall = ({
     if (!enabled || !sessionId) return;
     try {
       const endpointMap: Record<string, string> = {
-        initiate: `/call/initiate`,
-        accept: `/call/${sessionId}/accept`,
-        candidate: `/call/${sessionId}/candidate`,
+        initiate: `/call/initiate`, // Hanya untuk status panggilan
         end: `/call/${sessionId}/end`,
         missed: `/call/${sessionId}/missed`,
       };
@@ -101,7 +111,6 @@ export const useCall = ({
   const endCall = () => {
     if (peerConnectionRef.current) {
       peerConnectionRef.current.close();
-      peerConnectionRef.current = null;
     }
     setStatus("ended");
     if (enabled && sessionId) {
@@ -120,6 +129,7 @@ export const useCall = ({
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: true,
+          video: false, // Hanya audio
         });
         if (isCancelled) return;
         setLocalStream(stream);
@@ -129,64 +139,31 @@ export const useCall = ({
         });
         peerConnectionRef.current = pc;
 
-        stream.getTracks().forEach((track) => pc.addTrack(track));
+        stream.getAudioTracks().forEach((track) => pc.addTrack(track, stream));
 
         pc.ontrack = (e) => {
           if (isCancelled) return;
           if (e.streams[0]) setRemoteStream(e.streams[0]);
         };
 
-        pc.onconnectionstatechange = () => {
-          if (pc.connectionState === "connected") {
-            setStatus("connected");
-          } else if (
-            ["disconnected", "failed", "closed"].includes(pc.connectionState)
-          ) {
-            endCall();
+        // Kirim ICE candidate via WebSocket
+        pc.onicecandidate = (e) => {
+          if (e.candidate && peerId) {
+            sendCandidate(peerId, e.candidate);
           }
         };
 
+        // Gunakan Echo hanya untuk status panggilan (bukan signaling WebRTC)
         const channel = Echo.private(`call.${sessionId}`);
-
-        // ✅ Listen hanya untuk Answer, Candidate, End - CallOffer dihandle di Chat.tsx
-        channel.listen(".CallAnswer", (e: any) => {
-          if (!peerConnectionRef.current) return;
-          if (!e.answer?.type || !e.answer.sdp) return;
-
-          try {
-            const desc = new RTCSessionDescription({
-              type: e.answer.type,
-              sdp: e.answer.sdp,
-            });
-
-            peerConnectionRef.current
-              .setRemoteDescription(desc)
-              .then(() => setStatus("connected"))
-              .catch((err) => {
-                console.error("❌ Gagal setRemoteDescription (answer):", err);
-                endCall();
-              });
-          } catch (err: any) {
-            endCall();
-          }
-        });
-
-        channel.listen(".CallCandidate", (e: any) => {
-          if (!e.candidate) return;
-          const candidate = new RTCIceCandidate(e.candidate);
-          peerConnectionRef.current
-            ?.addIceCandidate(candidate)
-            .catch(console.error);
-        });
-
-        channel.listen(".CallEnded", endCall);
-        channel.listen(".CallMissed", endCall);
+        channel.listen(".CallEnded", onCallEnded);
+        channel.listen(".CallMissed", onCallEnded);
 
         return () => {
+          channel.stopListening(".CallEnded");
+          channel.stopListening(".CallMissed");
           if (peerConnectionRef.current) {
             peerConnectionRef.current.close();
           }
-          Echo.leave(`call.${sessionId}`);
         };
       } catch (err: any) {
         if (!isCancelled) {
@@ -208,19 +185,16 @@ export const useCall = ({
   }, [enabled, peerId, sessionId]);
 
   const startCall = async () => {
-    if (!enabled || !peerConnectionRef.current || !sessionId) return;
+    if (!enabled || !peerConnectionRef.current || !peerId) return;
     try {
       const offer = await peerConnectionRef.current.createOffer({
         offerToReceiveAudio: true,
+        offerToReceiveVideo: false,
       });
       await peerConnectionRef.current.setLocalDescription(offer);
 
-      // ✅ Kirim sdp asli — browser sudah benar
-      await sendToServer("initiate", {
-        session_id: sessionId,
-        offer: { type: offer.type, sdp: offer.sdp },
-      });
-
+      // Kirim offer via WebSocket (bukan API)
+      sendOffer(peerId, offer);
       setStatus("ringing");
     } catch (err: any) {
       setError(err.message);
@@ -229,43 +203,16 @@ export const useCall = ({
   };
 
   const acceptCall = async () => {
-    if (!enabled || !peerConnectionRef.current || !sessionId) return;
+    if (!enabled || !peerConnectionRef.current || !peerId) return;
     try {
       const answer = await peerConnectionRef.current.createAnswer();
       await peerConnectionRef.current.setLocalDescription(answer);
 
-      await sendToServer("accept", {
-        answer: { type: answer.type, sdp: answer.sdp },
-      });
-
+      // Kirim answer via WebSocket (bukan API)
+      sendAnswer(peerId, answer);
       setStatus("connected");
     } catch (err: any) {
       setError(err.message);
-      endCall();
-    }
-  };
-
-  const handleIncomingOffer = (offer: any) => {
-    if (!peerConnectionRef.current) return;
-
-    try {
-      const sdp = createMinimalOfferSdp();
-      const desc = new RTCSessionDescription({
-        type: offer.type,
-        sdp: sdp,
-      });
-
-      peerConnectionRef.current
-        .setRemoteDescription(desc)
-        .then(() => {
-          setStatus("ringing");
-        })
-        .catch((err) => {
-          console.error("❌ Gagal setRemoteDescription:", err);
-          endCall();
-        });
-    } catch (err: any) {
-      console.error("❌ Error parsing offer:", err);
       endCall();
     }
   };
@@ -286,6 +233,5 @@ export const useCall = ({
     rejectCall: enabled ? rejectCall : () => {},
     endCall: enabled ? endCall : () => {},
     error,
-    handleIncomingOffer: enabled ? handleIncomingOffer : () => {},
   };
 };

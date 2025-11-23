@@ -1,12 +1,14 @@
-// components/call/CallLayout.tsx
 import React from "react";
-import { FaPhoneAlt, FaPhoneSlash, FaTimes } from "react-icons/fa";
+import {
+  FaPhoneAlt,
+  FaPhoneSlash,
+  FaTimes,
+  FaMicrophone,
+} from "react-icons/fa";
 
 interface CallLayoutProps {
   status: "idle" | "ringing" | "connected" | "ended";
-  localStream: MediaStream | null;
-  remoteStream: MediaStream | null;
-  isCaller: boolean; // true = pemanggil, false = penerima
+  isCaller: boolean;
   onStartCall: () => void;
   onAccept: () => void;
   onReject: () => void;
@@ -16,8 +18,6 @@ interface CallLayoutProps {
 
 const CallLayout: React.FC<CallLayoutProps> = ({
   status,
-  localStream,
-  remoteStream,
   isCaller,
   onStartCall,
   onAccept,
@@ -31,24 +31,24 @@ const CallLayout: React.FC<CallLayoutProps> = ({
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Panggilan Suara</h2>
           <button
-            onClick={onClose}
+            onClick={() => {
+              if (status !== "idle" && status !== "ended") {
+                onEndCall();
+              } else {
+                onClose();
+              }
+            }}
             className="text-gray-500 hover:text-red-500"
           >
             <FaTimes />
           </button>
         </div>
 
-        {/* 🔹 1. Pemanggil: Klik untuk mulai */}
         {status === "idle" && (
           <div className="flex flex-col items-center gap-4">
-            <video
-              ref={(ref) => {
-                if (ref && localStream) ref.srcObject = localStream;
-              }}
-              autoPlay
-              muted
-              className="w-32 h-32 rounded-full object-cover"
-            />
+            <div className="bg-gray-200 rounded-full w-32 h-32 flex items-center justify-center">
+              <FaMicrophone className="text-4xl text-gray-600" />
+            </div>
             <p>Siap memanggil</p>
             <button
               onClick={onStartCall}
@@ -59,10 +59,11 @@ const CallLayout: React.FC<CallLayoutProps> = ({
           </div>
         )}
 
-        {/* 🔹 2. Pemanggil: Sedang menghubungi */}
         {status === "ringing" && isCaller && (
           <div className="flex flex-col items-center gap-4">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            <div className="animate-pulse bg-blue-100 rounded-full w-32 h-32 flex items-center justify-center">
+              <FaMicrophone className="text-4xl text-blue-500" />
+            </div>
             <p>Menghubungi...</p>
             <button
               onClick={onReject}
@@ -73,17 +74,11 @@ const CallLayout: React.FC<CallLayoutProps> = ({
           </div>
         )}
 
-        {/* 🔹 3. Penerima: Dapat panggilan */}
         {status === "ringing" && !isCaller && (
           <div className="flex flex-col items-center gap-4">
-            <video
-              ref={(ref) => {
-                if (ref && localStream) ref.srcObject = localStream;
-              }}
-              autoPlay
-              muted
-              className="w-32 h-32 rounded-full object-cover"
-            />
+            <div className="bg-green-100 rounded-full w-32 h-32 flex items-center justify-center">
+              <FaMicrophone className="text-4xl text-green-500" />
+            </div>
             <p>Panggilan Masuk</p>
             <div className="flex gap-3">
               <button
@@ -102,17 +97,11 @@ const CallLayout: React.FC<CallLayoutProps> = ({
           </div>
         )}
 
-        {/* 🔹 4. Terhubung */}
         {status === "connected" && (
           <div className="flex flex-col items-center gap-4">
-            <video
-              ref={(ref) => {
-                if (ref && remoteStream) ref.srcObject = remoteStream;
-              }}
-              autoPlay
-              playsInline
-              className="w-32 h-32 rounded-full object-cover"
-            />
+            <div className="bg-blue-100 rounded-full w-32 h-32 flex items-center justify-center">
+              <FaMicrophone className="text-4xl text-blue-500" />
+            </div>
             <p>Panggilan Berlangsung</p>
             <button
               onClick={onEndCall}
@@ -123,7 +112,6 @@ const CallLayout: React.FC<CallLayoutProps> = ({
           </div>
         )}
 
-        {/* 🔹 5. Selesai */}
         {status === "ended" && (
           <div className="flex flex-col items-center gap-4">
             <p>Panggilan Selesai</p>
