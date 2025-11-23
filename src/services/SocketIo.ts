@@ -5,7 +5,7 @@ let socket: Socket | null = null;
 
 export const initSocket = (userId: number) => {
   if (!socket) {
-    socket = io("http://localhost:8081", {
+    socket = io(import.meta.env.VITE_WEBSOCKET_URL, {
       transports: ["websocket"],
     });
 
