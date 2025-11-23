@@ -11,10 +11,14 @@ declare global {
 window.Pusher = Pusher;
 window.Echo = new Echo({
   broadcaster: "reverb",
-  key: import.meta.env.VITE_REVERB_APP_KEY,
-  authorizer: (channel: { name: any; }) => {
+  key: "fivj7xkhwtgyb0nwnqif",
+  // key: import.meta.env.VITE_REVERB_APP_KEY,
+  authorizer: (channel: { name: any }) => {
     return {
-      authorize: (socketId: string, callback: (error: boolean, data: any) => void) => {
+      authorize: (
+        socketId: string,
+        callback: (error: boolean, data: any) => void
+      ) => {
         api
           .post("broadcasting/auth", {
             socket_id: socketId,
