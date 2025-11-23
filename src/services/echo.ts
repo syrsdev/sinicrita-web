@@ -11,8 +11,7 @@ declare global {
 window.Pusher = Pusher;
 window.Echo = new Echo({
   broadcaster: "reverb",
-  key: "fivj7xkhwtgyb0nwnqif",
-  // key: import.meta.env.VITE_REVERB_APP_KEY,
+  key: import.meta.env.VITE_REVERB_APP_KEY,
   authorizer: (channel: { name: any }) => {
     return {
       authorize: (

@@ -20,13 +20,6 @@ import Users from "./dashboard/pages/Dashboard/Users.tsx";
 import NotFound from "./pages/404.tsx";
 import Profile from "./pages/profile/Profile.tsx";
 
-// Di bagian atas file, setelah import
-console.log("🔍 Environment Variables:");
-console.log("VITE_REVERB_APP_KEY:", import.meta.env.VITE_REVERB_APP_KEY);
-console.log("VITE_REVERB_HOST:", import.meta.env.VITE_REVERB_HOST);
-console.log("VITE_REVERB_PORT:", import.meta.env.VITE_REVERB_PORT);
-console.log("VITE_REVERB_SCHEME:", import.meta.env.VITE_REVERB_SCHEME);
-
 const router = createBrowserRouter([
   {
     path: "/",
